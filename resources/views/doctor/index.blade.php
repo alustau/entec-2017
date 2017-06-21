@@ -16,15 +16,40 @@
                                     <th>Name</th>
                                     <th>Specialty</th>
                                     <th>Registry</th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($doctors as $doctor)
                                     <tr>
-                                        <td>{{ $doctor->id }}</td>
-                                        <td>{{ $doctor->name }}</td>
-                                        <td>{{ $doctor->specialty }}</td>
-                                        <td>{{ $doctor->registry }}</td>
+                                        <td>
+                                            <a href="{{ route('doctor.edit', ['doctor' => $doctor->id]) }}">
+                                                {{ $doctor->id }}
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a href="{{ route('doctor.edit', ['doctor' => $doctor->id]) }}">
+                                                {{ $doctor->name }}
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a href="{{ route('doctor.edit', ['doctor' => $doctor->id]) }}">
+                                                {{ $doctor->specialty }}
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a href="{{ route('doctor.edit', ['doctor' => $doctor->id]) }}">
+                                                {{ $doctor->registry }}
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a class="btn btn-warning btn-xs" href="{{ route('doctor.edit', ['doctor' => $doctor->id]) }}">
+                                                <span class="glyphicon glyphicon-edit"></span>
+                                            </a>
+                                            <a class="btn btn-danger btn-xs" href="{{ route('doctor.delete', ['doctor' => $doctor->id]) }}">
+                                                <span class="glyphicon glyphicon-remove"></span>
+                                            </a>
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>

@@ -7,7 +7,6 @@ use App\Doctor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
-use PhpParser\Comment\Doc;
 
 class DoctorController extends Controller
 {
@@ -71,10 +70,10 @@ class DoctorController extends Controller
         return redirect()->route('doctor.edit', ['doctor' => $doctor->id]);
     }
 
-    public function delete()
+    public function delete(Doctor $doctor)
     {
-        $users = User::all();
+        $doctor->delete();
 
-        return view('user.index', compact('users'));
+        return redirect()->route('doctors.index');
     }
 }

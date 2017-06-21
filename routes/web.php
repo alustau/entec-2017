@@ -28,4 +28,4 @@ Route::get('/doctor/create', 'DoctorController@create')->name('doctor.create')->
 Route::post('/doctor', 'DoctorController@store')->name('doctor.save')->middleware('auth');
 Route::get('/doctor/{doctor}/edit', 'DoctorController@edit')->name('doctor.edit')->middleware('auth');
 Route::post('/doctor/{doctor}/update', 'DoctorController@update')->name('doctor.update')->middleware('auth');
-Route::delete('/doctor/{doctor}', 'DoctorController@delete')->name('doctor.delete')->middleware('auth');
+Route::get('/doctor/{doctor}/delete', 'DoctorController@delete')->name('doctor.delete')->middleware('auth');
