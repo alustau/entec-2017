@@ -24,6 +24,7 @@ Route::get('/home', 'HomeController@index')
 Route::get('/users', 'UserController@index')->name('users')->middleware('auth');
 
 Route::get('/doctors', 'DoctorController@index')->name('doctors.index')->middleware('auth');
-Route::post('/doctors', 'DoctorController@store')->name('doctors.save')->middleware('auth');
-Route::post('/doctors', 'DoctorController@edit')->name('doctors.edit')->middleware('auth');
-Route::delete('/doctors', 'DoctorController@delete')->name('doctors.delete')->middleware('auth');
+Route::get('/doctor/create', 'DoctorController@create')->name('doctor.create')->middleware('auth');
+Route::post('/doctor', 'DoctorController@store')->name('doctor.save')->middleware('auth');
+Route::post('/doctor/{doctor}/edit', 'DoctorController@edit')->name('doctors.edit')->middleware('auth');
+Route::delete('/doctor/{doctor}', 'DoctorController@delete')->name('doctors.delete')->middleware('auth');

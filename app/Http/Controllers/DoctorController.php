@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 
 use App\Doctor;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class DoctorController extends Controller
 {
@@ -14,11 +16,28 @@ class DoctorController extends Controller
         return view('doctor.index', compact('doctors'));
     }
 
-    public function store()
+    public function create()
     {
-        $users = User::all();
+        return view('doctor.create');
+    }
 
-        return view('user.index', compact('users'));
+    public function store(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'name'      => 'required',
+            'specialty' => 'required',
+            'registry'  => 'required|unique:doctor',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->route('doctor.create')
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        Doctor::create($request->all());
+
+        return redirect()->route('doctors.index');
     }
 
     public function edit()
