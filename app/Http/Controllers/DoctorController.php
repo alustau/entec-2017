@@ -73,12 +73,22 @@ class DoctorController extends Controller
 
         $doctor->update($data);
 
+        Session::flash('flash_messenger', [
+            'type'    => 'success',
+            'message' => 'Doctor has been updated'
+        ]);
+
         return redirect()->route('doctor.edit', ['doctor' => $doctor->id]);
     }
 
     public function delete(Doctor $doctor)
     {
         $doctor->delete();
+
+        Session::flash('flash_messenger', [
+            'type'    => 'success',
+            'message' => 'Doctor has been removed'
+        ]);
 
         return redirect()->route('doctors.index');
     }

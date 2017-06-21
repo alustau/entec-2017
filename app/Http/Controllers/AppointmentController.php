@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 use App\Appointment;
 use App\Doctor;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
@@ -40,6 +41,11 @@ class AppointmentController extends Controller
 
         Appointment::create($request->all());
 
+        Session::flash('flash_messenger', [
+            'type'    => 'success',
+            'message' => 'Appointement has been created'
+        ]);
+
         return redirect()->route('appointments.index');
     }
 
@@ -69,12 +75,22 @@ class AppointmentController extends Controller
 
         $doctor->update($data);
 
+        Session::flash('flash_messenger', [
+            'type'    => 'success',
+            'message' => 'Appointment has been updated'
+        ]);
+
         return redirect()->route('doctor.edit', ['doctor' => $doctor->id]);
     }
 
     public function delete(Appointment $appointment)
     {
         $appointment->delete();
+
+        Session::flash('flash_messenger', [
+            'type'    => 'success',
+            'message' => 'Appointment has been removed'
+        ]);
 
         return back();
     }
