@@ -83,6 +83,7 @@ class DoctorController extends Controller
 
     public function delete(Doctor $doctor)
     {
+        $doctor->appointments()->delete();
         $doctor->delete();
 
         Session::flash('flash_messenger', [
