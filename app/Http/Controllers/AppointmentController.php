@@ -72,10 +72,10 @@ class AppointmentController extends Controller
         return redirect()->route('doctor.edit', ['doctor' => $doctor->id]);
     }
 
-    public function delete(Doctor $doctor)
+    public function delete(Appointment $appointment)
     {
-        $doctor->delete();
+        $appointment->delete();
 
-        return redirect()->route('doctors.index');
+        return back();
     }
 }

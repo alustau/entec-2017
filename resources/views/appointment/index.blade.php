@@ -46,7 +46,7 @@
                                             {{ $appointment->created_at->format('d/m/Y H:i:s') }}
                                         </td>
                                         <td>
-                                            <a class="btn btn-danger btn-xs" href="{{ route('doctor.delete', ['doctor' => $appointment->id]) }}">
+                                            <a class="btn btn-danger btn-xs" href="{{ route('appointment.delete', ['doctor' => $appointment->id]) }}">
                                                 <span class="glyphicon glyphicon-remove"></span>
                                             </a>
                                         </td>

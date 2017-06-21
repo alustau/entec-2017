@@ -46,6 +46,10 @@ Route::get('/doctor/{doctor}/delete', 'DoctorController@delete')
     ->name('doctor.delete')
     ->middleware('auth');
 
+Route::get('/doctor/{doctor}/appointments', 'DoctorController@appointments')
+    ->name('doctor.appointments')
+    ->middleware('auth');
+
 Route::get('/appointments', 'AppointmentController@index')
     ->name('appointments.index')
     ->middleware('auth');
@@ -56,4 +60,8 @@ Route::get('/appointment/create', 'AppointmentController@create')
 
 Route::post('/appointment', 'AppointmentController@store')
     ->name('appointment.save')
+    ->middleware('auth');
+
+Route::get('/appointment/{appointment}/delete', 'AppointmentController@delete')
+    ->name('appointment.delete')
     ->middleware('auth');

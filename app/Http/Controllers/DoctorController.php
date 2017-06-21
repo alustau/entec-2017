@@ -76,4 +76,9 @@ class DoctorController extends Controller
 
         return redirect()->route('doctors.index');
     }
+
+    public function appointments(Doctor $doctor)
+    {
+        return view('doctor.appointments', compact('doctor'));
+    }
 }

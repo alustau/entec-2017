@@ -50,6 +50,9 @@
                                             </a>
                                         </td>
                                         <td>
+                                            <a class="btn btn-info btn-xs" title="Appointments" href="{{ route('doctor.appointments', ['doctor' => $doctor->id]) }}">
+                                                <span class="glyphicon glyphicon-menu-hamburger"></span>
+                                            </a>
                                             <a class="btn btn-warning btn-xs" href="{{ route('doctor.edit', ['doctor' => $doctor->id]) }}">
                                                 <span class="glyphicon glyphicon-edit"></span>
                                             </a>
