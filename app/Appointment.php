@@ -13,6 +13,10 @@ class Appointment extends Model
         'patient_name',
     ];
 
+    protected $dates = [
+        'created_at'
+    ];
+
     public function doctor()
     {
         return $this->belongsTo(Doctor::class, 'doctor_id');

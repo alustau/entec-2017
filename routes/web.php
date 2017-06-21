@@ -45,3 +45,15 @@ Route::post('/doctor/{doctor}/update', 'DoctorController@update')
 Route::get('/doctor/{doctor}/delete', 'DoctorController@delete')
     ->name('doctor.delete')
     ->middleware('auth');
+
+Route::get('/appointments', 'AppointmentController@index')
+    ->name('appointments.index')
+    ->middleware('auth');
+
+Route::get('/appointment/create', 'AppointmentController@create')
+    ->name('appointment.create')
+    ->middleware('auth');
+
+Route::post('/appointment', 'AppointmentController@store')
+    ->name('appointment.save')
+    ->middleware('auth');
