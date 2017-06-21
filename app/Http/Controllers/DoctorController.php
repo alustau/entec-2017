@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use App\Doctor;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
@@ -37,6 +38,11 @@ class DoctorController extends Controller
         }
 
         Doctor::create($request->all());
+
+        Session::flash('flash_messenger', [
+            'type'    => 'success',
+            'message' => 'Doctor has been created'
+        ]);
 
         return redirect()->route('doctors.index');
     }

@@ -64,6 +64,15 @@
             </div>
         </nav>
 
+        @if (Session::has('flash_messenger'))
+            <div class="container">
+                <div class="alert alert-{{ Session::get('flash_messenger.type', 'warning') }} alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    {{ Session::get('flash_messenger.message') }}
+                </div>
+            </div>
+        @endif
+
         @yield('content')
     </div>
 
