@@ -23,9 +23,25 @@ Route::get('/home', 'HomeController@index')
 
 Route::get('/users', 'UserController@index')->name('users')->middleware('auth');
 
-Route::get('/doctors', 'DoctorController@index')->name('doctors.index')->middleware('auth');
-Route::get('/doctor/create', 'DoctorController@create')->name('doctor.create')->middleware('auth');
-Route::post('/doctor', 'DoctorController@store')->name('doctor.save')->middleware('auth');
-Route::get('/doctor/{doctor}/edit', 'DoctorController@edit')->name('doctor.edit')->middleware('auth');
-Route::post('/doctor/{doctor}/update', 'DoctorController@update')->name('doctor.update')->middleware('auth');
-Route::get('/doctor/{doctor}/delete', 'DoctorController@delete')->name('doctor.delete')->middleware('auth');
+Route::get('/doctors', 'DoctorController@index')
+    ->name('doctors.index')
+    ->middleware('auth');
+
+Route::get('/doctor/create', 'DoctorController@create')
+    ->name('doctor.create')
+    ->middleware('auth');
+
+Route::post('/doctor', 'DoctorController@store')
+    ->name('doctor.save')
+    ->middleware('auth');
+
+Route::get('/doctor/{doctor}/edit', 'DoctorController@edit')
+    ->name('doctor.edit')
+    ->middleware('auth');
+Route::post('/doctor/{doctor}/update', 'DoctorController@update')
+    ->name('doctor.update')
+    ->middleware('auth');
+
+Route::get('/doctor/{doctor}/delete', 'DoctorController@delete')
+    ->name('doctor.delete')
+    ->middleware('auth');
