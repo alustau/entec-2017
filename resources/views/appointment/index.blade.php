@@ -8,10 +8,17 @@
                 <div class="panel-heading">
                     Appointments list
 
-                    <a href="{{ route('appointment.create') }}">
-                        <span class="pull-right glyphicon glyphicon-plus">
-                        </span>
-                    </a>
+                    <div class="row pull-right">
+                        <a href="{{ route('home') }}" class="col-md-6">
+                            <span class="glyphicon glyphicon-arrow-left">
+                            </span>
+                        </a>
+
+                        <a href="{{ route('appointment.create') }}" class="col-md-6">
+                            <span class="glyphicon glyphicon-plus">
+                            </span>
+                        </a>
+                    </div>
                 </div>
 
                 <div class="panel-body">

@@ -5,7 +5,16 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading">Doctor Form</div>
+                <div class="panel-heading">
+                    Doctor Form
+
+                    <div class="row pull-right">
+                        <a href="{{ route('doctors.index') }}" class="col-md-6">
+                            <span class="glyphicon glyphicon-arrow-left">
+                            </span>
+                        </a>
+                    </div>
+                </div>
 
                 <div class="panel-body">
                     <form action="{{ route('doctor.save') }}" method="post">
