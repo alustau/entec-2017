@@ -5,7 +5,14 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading">Doctor list</div>
+                <div class="panel-heading">
+                    Doctor list
+
+                    <a href="{{ route('doctor.create') }}">
+                        <span class="pull-right glyphicon glyphicon-plus">
+                        </span>
+                    </a>
+                </div>
 
                 <div class="panel-body">
                     <div class="table-responsive">
