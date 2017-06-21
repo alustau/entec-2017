@@ -22,3 +22,8 @@ Route::get('/home', 'HomeController@index')
     ->middleware('auth');
 
 Route::get('/users', 'UserController@index')->name('users')->middleware('auth');
+
+Route::get('/doctors', 'DoctorController@index')->name('doctors.index')->middleware('auth');
+Route::post('/doctors', 'DoctorController@store')->name('doctors.save')->middleware('auth');
+Route::post('/doctors', 'DoctorController@edit')->name('doctors.edit')->middleware('auth');
+Route::delete('/doctors', 'DoctorController@delete')->name('doctors.delete')->middleware('auth');
