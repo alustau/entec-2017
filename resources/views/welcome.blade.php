@@ -83,7 +83,7 @@
                 </div>
 
                 <div class="links">
-                    <a href="https://github.com/alustau" target="_blank">Meu Github</a>
+                    <a href="https://github.com/alustau/entec-2017" target="_blank">Github</a>
                 </div>
             </div>
         </div>
