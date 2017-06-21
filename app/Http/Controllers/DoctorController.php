@@ -6,6 +6,8 @@ namespace App\Http\Controllers;
 use App\Doctor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
+use PhpParser\Comment\Doc;
 
 class DoctorController extends Controller
 {
@@ -40,11 +42,33 @@ class DoctorController extends Controller
         return redirect()->route('doctors.index');
     }
 
-    public function edit()
+    public function edit(Doctor $doctor)
     {
-        $users = User::all();
+        return view('doctor.edit', compact('doctor'));
+    }
 
-        return view('user.index', compact('users'));
+    public function update(Doctor $doctor, Request $request)
+    {
+        $data = $request->all();
+
+        $validator = Validator::make($data, [
+            'name'      => 'required',
+            'specialty' => 'required',
+            'registry'  => [
+                'required',
+                Rule::unique('doctor')->ignore($doctor->id)
+            ]
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->route('doctor.edit', ['doctor' => $doctor->id])
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        $doctor->update($data);
+
+        return redirect()->route('doctor.edit', ['doctor' => $doctor->id]);
     }
 
     public function delete()
