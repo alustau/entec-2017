@@ -1,6 +1,7 @@
 <?php
 namespace Tests\Controller;
 
+use App\Appointment;
 use App\Doctor;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
@@ -80,5 +81,25 @@ class AppointmentControllerTest extends TestCase
             'doctor_id'    => 'The doctor id field is required.',
             'patient_name' => 'The patient name field is required.',
         ]);
+    }
+
+    /**
+     * @test
+     * @return void
+     */
+    public function delete_action()
+    {
+        $appointment = factory(Appointment::class)->create();
+
+        $response = $this->get(route('appointment.delete', $appointment->id));
+
+        $response->assertRedirect();
+
+        $response->assertSessionHas('flash_messenger', [
+            'type'    => 'success',
+            'message' => 'Appointment has been removed'
+        ]);
+
+        $this->assertEquals(0, Appointment::count());
     }
 }
