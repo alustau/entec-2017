@@ -11,7 +11,6 @@ class DoctorControllerTest extends TestCase
 {
     use WithoutMiddleware, DatabaseTransactions;
 
-
     /**
      * @test
      * @return void
@@ -59,5 +58,22 @@ class DoctorControllerTest extends TestCase
 
         $response->assertRedirect(route('doctors.index'));
 
+    }
+
+    /**
+     * @test
+     * @return void
+     */
+    public function store_action_with_invalid_params()
+    {
+        $response = $this->post(route('doctor.save'), []);
+
+        $response->assertSessionHas('errors');
+        $response->assertRedirect(route('doctor.create'));
+        $response->assertSessionHasErrors([
+            'name'      => 'The name field is required.',
+            'specialty' => 'The specialty field is required.',
+            'registry'  => 'The registry field is required.',
+        ]);
     }
 }
