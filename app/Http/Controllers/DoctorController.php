@@ -11,9 +11,14 @@ use Illuminate\Validation\Rule;
 
 class DoctorController extends Controller
 {
+    public function __construct(Doctor $doctor)
+    {
+        $this->doctor = $doctor;
+    }
+
     public function index()
     {
-        $doctors = Doctor::all();
+        $doctors = $this->doctor->all();
 
         return view('doctor.index', compact('doctors'));
     }

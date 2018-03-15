@@ -25,7 +25,8 @@ Route::get('/users', 'UserController@index')->name('users')->middleware('auth');
 
 Route::get('/doctors', 'DoctorController@index')
     ->name('doctors.index')
-    ->middleware('auth');
+    ->middleware('auth')
+;
 
 Route::get('/doctor/create', 'DoctorController@create')
     ->name('doctor.create')
