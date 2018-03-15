@@ -40,4 +40,26 @@ class AppointmentControllerTest extends TestCase
 
         $response->assertViewHas('doctors');
     }
+
+
+    /**
+     * @test
+     * @return void
+     */
+    public function store_action_with_valid_params()
+    {
+        $doctor = factory(Doctor::class)->create();
+
+        $response = $this->post(route('appointment.save'), [
+            'doctor_id'    => $doctor->id,
+            'patient_name' => 'Denis Alustau',
+        ]);
+
+        $response->assertSessionHas('flash_messenger', [
+            'type'    => 'success',
+            'message' => 'Appointement has been created'
+        ]);
+
+        $response->assertRedirect(route('appointments.index'));
+    }
 }
