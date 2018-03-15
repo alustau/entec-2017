@@ -52,8 +52,10 @@ class DoctorController extends Controller
         return view('doctor.edit', compact('doctor'));
     }
 
-    public function update(Doctor $doctor, Request $request)
+    public function update($doctor, Request $request)
     {
+        $doctor = Doctor::find($doctor);
+
         $data = $request->all();
 
         $validator = Validator::make($data, [
@@ -81,8 +83,10 @@ class DoctorController extends Controller
         return redirect()->route('doctor.edit', ['doctor' => $doctor->id]);
     }
 
-    public function delete(Doctor $doctor)
+    public function delete($doctor)
     {
+        $doctor = Doctor::find($doctor);
+
         $doctor->appointments()->delete();
         $doctor->delete();
 

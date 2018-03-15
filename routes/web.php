@@ -25,7 +25,8 @@ Route::get('/users', 'UserController@index')->name('users')->middleware('auth');
 
 Route::get('/doctors', 'DoctorController@index')
     ->name('doctors.index')
-    ->middleware('auth');
+    ->middleware('auth')
+;
 
 Route::get('/doctor/create', 'DoctorController@create')
     ->name('doctor.create')
@@ -38,6 +39,7 @@ Route::post('/doctor', 'DoctorController@store')
 Route::get('/doctor/{doctor}/edit', 'DoctorController@edit')
     ->name('doctor.edit')
     ->middleware('auth');
+
 Route::post('/doctor/{doctor}/update', 'DoctorController@update')
     ->name('doctor.update')
     ->middleware('auth');
