@@ -24,4 +24,20 @@ class AppointmentControllerTest extends TestCase
 
         $response->assertViewHas('appointments');
     }
+
+
+    /**
+     * @test
+     * @return void
+     */
+    public function create_action()
+    {
+        $response = $this->get(route('appointment.create'));
+
+        $response->assertSuccessful();
+
+        $response->assertSeeText('Appointment Form');
+
+        $response->assertViewHas('doctors');
+    }
 }
