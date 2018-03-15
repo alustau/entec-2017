@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 
 use App\Doctor;
+use App\Http\Requests\DoctorStoreRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
@@ -23,20 +24,8 @@ class DoctorController extends Controller
         return view('doctor.create');
     }
 
-    public function store(Request $request)
+    public function store(DoctorStoreRequest $request)
     {
-        $validator = Validator::make($request->all(), [
-            'name'      => 'required',
-            'specialty' => 'required',
-            'registry'  => 'required|unique:doctor',
-        ]);
-
-        if ($validator->fails()) {
-            return redirect()->route('doctor.create')
-                ->withErrors($validator)
-                ->withInput();
-        }
-
         Doctor::create($request->all());
 
         Session::flash('flash_messenger', [
@@ -88,7 +77,7 @@ class DoctorController extends Controller
         $doctor = Doctor::find($doctor);
 
         $doctor->appointments()->delete();
-        $doctor->delete();
+            $doctor->delete();
 
         Session::flash('flash_messenger', [
             'type'    => 'success',
