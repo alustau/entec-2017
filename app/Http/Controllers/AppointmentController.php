@@ -49,42 +49,10 @@ class AppointmentController extends Controller
         return redirect()->route('appointments.index');
     }
 
-    public function edit(Doctor $doctor)
+    public function delete($appointment)
     {
-        return view('doctor.edit', compact('doctor'));
-    }
+        $appointment = Appointment::find($appointment);
 
-    public function update(Doctor $doctor, Request $request)
-    {
-        $data = $request->all();
-
-        $validator = Validator::make($data, [
-            'name'      => 'required',
-            'specialty' => 'required',
-            'registry'  => [
-                'required',
-                Rule::unique('doctor')->ignore($doctor->id)
-            ]
-        ]);
-
-        if ($validator->fails()) {
-            return redirect()->route('doctor.edit', ['doctor' => $doctor->id])
-                ->withErrors($validator)
-                ->withInput();
-        }
-
-        $doctor->update($data);
-
-        Session::flash('flash_messenger', [
-            'type'    => 'success',
-            'message' => 'Appointment has been updated'
-        ]);
-
-        return redirect()->route('doctor.edit', ['doctor' => $doctor->id]);
-    }
-
-    public function delete(Appointment $appointment)
-    {
         $appointment->delete();
 
         Session::flash('flash_messenger', [

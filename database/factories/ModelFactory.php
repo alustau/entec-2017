@@ -32,3 +32,13 @@ $factory->define(App\Doctor::class, function (Faker\Generator $faker) {
         'registry' => $faker->unique()->uuid,
     ];
 });
+
+$factory->define(App\Appointment::class, function (Faker\Generator $faker) {
+
+    $doctor = factory(App\Doctor::class)->create();
+
+    return [
+        'doctor_id'    => $doctor->id,
+        'patient_name' => $faker->name,
+    ];
+});

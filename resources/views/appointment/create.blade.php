@@ -30,7 +30,7 @@
                                 @endforeach
                             </select>
 
-                            @if ($errors->has('doctor_id'))
+                            @if (isset($errors) && $errors->has('doctor_id'))
                                 <span class="help-block">
                                     <strong>{{ $errors->first('doctor_id') }}</strong>
                                 </span>
@@ -42,7 +42,7 @@
                                    name="patient_name" id="patient_name"
                                    placeholder="Patient Name">
 
-                            @if ($errors->has('patient_name'))
+                            @if (isset($errors) && $errors->has('patient_name'))
                                 <span class="help-block">
                                     <strong>{{ $errors->first('patient_name') }}</strong>
                                 </span>
