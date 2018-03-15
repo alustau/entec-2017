@@ -62,4 +62,23 @@ class AppointmentControllerTest extends TestCase
 
         $response->assertRedirect(route('appointments.index'));
     }
+
+
+    /**
+     * @test
+     * @return void
+     */
+    public function store_action_with_invalid_params()
+    {
+        $response = $this->post(route('appointment.save'), []);
+
+        $response->assertSessionHas('errors');
+
+        $response->assertRedirect(route('appointment.create'));
+
+        $response->assertSessionHasErrors([
+            'doctor_id'    => 'The doctor id field is required.',
+            'patient_name' => 'The patient name field is required.',
+        ]);
+    }
 }
