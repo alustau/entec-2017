@@ -4,12 +4,13 @@ namespace Tests\Controller;
 
 use App\Doctor;
 use Tests\TestCase;
-use \Mockery;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class DoctorControllerTest extends TestCase
 {
-    use WithoutMiddleware;
+    use WithoutMiddleware, DatabaseTransactions;
+
 
     /**
      * @test
@@ -19,7 +20,7 @@ class DoctorControllerTest extends TestCase
     {
         $response = $this->get(route('doctors.index'));
 
-        $response->assertStatus(200);
+        $response->assertSuccessful();
 
         $response->assertSeeText('Doctor list');
 
@@ -34,8 +35,29 @@ class DoctorControllerTest extends TestCase
     {
         $response = $this->get(route('doctor.create'));
 
-        $response->assertStatus(200);
+        $response->assertSuccessful();
 
         $response->assertSeeText('Doctor Form');
+    }
+
+    /**
+     * @test
+     * @return void
+     */
+    public function store_action_with_valid_params()
+    {
+        $data = factory(Doctor::class)->make()->toArray();
+
+        $response = $this->post(route('doctor.save'), $data);
+
+        $response->assertSessionHas('flash_messenger', [
+            'message' => 'Doctor has been created',
+            'type'    => 'success'
+        ]);
+
+        $this->assertEquals(1, Doctor::count());
+
+        $response->assertRedirect(route('doctors.index'));
+
     }
 }
