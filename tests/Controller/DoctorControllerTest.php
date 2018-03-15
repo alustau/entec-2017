@@ -76,4 +76,21 @@ class DoctorControllerTest extends TestCase
             'registry'  => 'The registry field is required.',
         ]);
     }
+
+    /**
+     * @test
+     * @return void
+     */
+    public function edit_action()
+    {
+        $doctor = factory(Doctor::class)->create();
+
+        $response = $this->get(route('doctor.edit', ['doctor' => $doctor->id]));
+
+        $response->assertSuccessful();
+
+        $response->assertSeeText('Edit Doctor');
+
+        $response->assertViewHas('doctor');
+    }
 }

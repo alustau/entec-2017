@@ -6,7 +6,7 @@
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    Doctor Form
+                    Edit Doctor
 
                     <div class="row pull-right">
                         <a href="{{ route('doctors.index') }}" class="col-md-6">
@@ -25,7 +25,7 @@
                         <div class="form-group">
                             <label for="name">Name</label>
                             <input type="text" class="form-control" name="name" id="name" placeholder="Name" value="{{ $doctor->name }}">
-                            @if ($errors->has('name'))
+                            @if (isset($errors) && $errors->has('name'))
                                 <span class="help-block">
                                     <strong>{{ $errors->first('name') }}</strong>
                                 </span>
@@ -34,7 +34,7 @@
                         <div class="form-group">
                             <label for="specialty">Specialty</label>
                             <input type="text" class="form-control" name="specialty" value="{{ $doctor->specialty }}" id="specialty" placeholder="Specialty">
-                            @if ($errors->has('specialty'))
+                            @if (isset($errors) && $errors->has('specialty'))
                                 <span class="help-block">
                                     <strong>{{ $errors->first('specialty') }}</strong>
                                 </span>
@@ -43,7 +43,7 @@
                         <div class="form-group">
                             <label for="specialty">Registry</label>
                             <input type="text" class="form-control" name="registry" value="{{ $doctor->registry }}" id="registry" placeholder="Registry">
-                            @if ($errors->has('registry'))
+                            @if (isset($errors) && $errors->has('registry'))
                                 <span class="help-block">
                                     <strong>{{ $errors->first('registry') }}</strong>
                                 </span>
