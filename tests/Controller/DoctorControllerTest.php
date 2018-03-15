@@ -103,11 +103,10 @@ class DoctorControllerTest extends TestCase
     public function update_action_with_valid_params()
     {
         $doctor = $this->createDoctor();
-        $data = $doctor->toArray();
 
-        unset($data['id']);
+        $doctor->specialty = 'otorhinolaryngologist';
 
-        $response = $this->post(route('doctor.update', 1), $data);
+        $response = $this->post(route('doctor.update', $doctor->id), $doctor->toArray());
 
         $response->assertSessionHas('flash_messenger', [
             'type'    => 'success',
@@ -115,6 +114,29 @@ class DoctorControllerTest extends TestCase
         ]);
 
         $response->assertRedirect(route('doctor.edit', ['doctor' => $doctor->id]));
+    }
+
+    /**
+     * @test
+     * @return void
+     */
+    public function update_action_with_invalid_params()
+    {
+        $doctor  = $this->createDoctor();
+        $doctor2 = $this->createDoctor();
+
+        $data = $doctor->toArray();
+
+        $data['registry'] = $doctor2->registry;
+
+        $response = $this->post(route('doctor.update', $doctor->id), $data);
+
+        $response->assertSessionHasErrors([
+            'registry'  => 'The registry has already been taken.',
+        ]);
+
+        $response->assertRedirect(route('doctor.edit', ['doctor' => $doctor->id]));
+
     }
 
     /**
