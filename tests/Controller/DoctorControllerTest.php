@@ -140,6 +140,21 @@ class DoctorControllerTest extends TestCase
     }
 
     /**
+     * @test
+     * @return void
+     */
+    public function appointments_action()
+    {
+        $doctor  = $this->createDoctor();
+
+        $response = $this->get(route('doctor.appointments', $doctor->id));
+
+        $response->assertViewHas('doctor');
+
+        $response->assertSeeText('Appointment list - ');
+    }
+
+    /**
      * @return mixed
      */
     protected function createDoctor()
