@@ -1,5 +1,4 @@
 <?php
-
 namespace Tests\Controller;
 
 use App\Doctor;
@@ -152,6 +151,25 @@ class DoctorControllerTest extends TestCase
         $response->assertViewHas('doctor');
 
         $response->assertSeeText('Appointment list - ');
+    }
+
+    /**
+     * @test
+     * @return void
+     */
+    public function delete_action()
+    {
+        $doctor  = $this->createDoctor();
+
+        $response = $this->get(route('doctor.delete', $doctor->id));
+
+        $response->assertRedirect(route('doctors.index'));
+        $response->assertSessionHas('flash_messenger', [
+            'type'    => 'success',
+            'message' => 'Doctor has been removed'
+        ]);
+
+        $this->assertEquals(0, Doctor::count());
     }
 
     /**

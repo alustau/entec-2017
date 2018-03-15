@@ -83,8 +83,10 @@ class DoctorController extends Controller
         return redirect()->route('doctor.edit', ['doctor' => $doctor->id]);
     }
 
-    public function delete(Doctor $doctor)
+    public function delete($doctor)
     {
+        $doctor = Doctor::find($doctor);
+
         $doctor->appointments()->delete();
         $doctor->delete();
 
