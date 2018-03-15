@@ -39,6 +39,7 @@ Route::post('/doctor', 'DoctorController@store')
 Route::get('/doctor/{doctor}/edit', 'DoctorController@edit')
     ->name('doctor.edit')
     ->middleware('auth');
+
 Route::post('/doctor/{doctor}/update', 'DoctorController@update')
     ->name('doctor.update')
     ->middleware('auth');

@@ -45,7 +45,9 @@ class DoctorControllerTest extends TestCase
      */
     public function store_action_with_valid_params()
     {
-        $data = factory(Doctor::class)->make()->toArray();
+        $data = factory(Doctor::class)
+            ->make()
+            ->toArray();
 
         $response = $this->post(route('doctor.save'), $data);
 
@@ -83,7 +85,7 @@ class DoctorControllerTest extends TestCase
      */
     public function edit_action()
     {
-        $doctor = factory(Doctor::class)->create();
+        $doctor = $this->createDoctor();
 
         $response = $this->get(route('doctor.edit', ['doctor' => $doctor->id]));
 
@@ -92,5 +94,34 @@ class DoctorControllerTest extends TestCase
         $response->assertSeeText('Edit Doctor');
 
         $response->assertViewHas('doctor');
+    }
+
+    /**
+     * @test
+     * @return void
+     */
+    public function update_action_with_valid_params()
+    {
+        $doctor = $this->createDoctor();
+        $data = $doctor->toArray();
+
+        unset($data['id']);
+
+        $response = $this->post(route('doctor.update', 1), $data);
+
+        $response->assertSessionHas('flash_messenger', [
+            'type'    => 'success',
+            'message' => 'Doctor has been updated'
+        ]);
+
+        $response->assertRedirect(route('doctor.edit', ['doctor' => $doctor->id]));
+    }
+
+    /**
+     * @return mixed
+     */
+    protected function createDoctor()
+    {
+        return factory(Doctor::class)->create();
     }
 }

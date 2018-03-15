@@ -24,9 +24,11 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
 });
 
 $factory->define(App\Doctor::class, function (Faker\Generator $faker) {
+    $specialty = ['cardiologist', 'pediatrician', 'general'];
+
     return [
         'name' => $faker->name,
-        'specialty' => $faker->name,
+        'specialty' => $specialty[array_rand($specialty)],
         'registry' => $faker->unique()->uuid,
     ];
 });
