@@ -2,6 +2,7 @@
 namespace Tests\Unit\Services\Doctor\Eloquent;
 
 use App\Contracts\Doctor\Listable;
+use App\Contracts\Doctor\Creatable;
 use App\Models\Doctor;
 use App\Services\Doctor\Eloquent\Service;
 use Illuminate\Support\Collection;
@@ -36,6 +37,15 @@ class ServiceTest extends TestCase
      * @test
      * @return void
      */
+    public function it_is_instance_of_creatable()
+    {
+        $this->assertInstanceOf(Creatable::class, $this->service);
+    }
+
+    /**
+     * @test
+     * @return void
+     */
     public function it_list_all_doctors()
     {
         $this->createDoctor();
@@ -45,5 +55,22 @@ class ServiceTest extends TestCase
         $this->assertCount(3, $doctors);
 
         $this->assertInstanceOf(Collection::class, $doctors);
+    }
+
+    /**
+     * @test
+     * @return void
+     */
+    public function it_create_a_new_doctor()
+    {
+        $data = factory(Doctor::class)
+            ->make()
+            ->toArray();
+
+        $doctor = $this->service->create($data);
+
+        $this->assertEquals(1, Doctor::count());
+
+        $this->assertInstanceOf(Doctor::class, $doctor);
     }
 }

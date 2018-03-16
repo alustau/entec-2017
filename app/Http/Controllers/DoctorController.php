@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 
+use App\Contracts\Doctor\Creatable;
 use App\Contracts\Doctor\Listable;
 use App\Models\Doctor;
 use App\Http\Requests\DoctorStoreRequest;
@@ -23,9 +24,9 @@ class DoctorController extends Controller
         return view('doctor.create');
     }
 
-    public function store(DoctorStoreRequest $request)
+    public function store(DoctorStoreRequest $request, Creatable $creator)
     {
-        Doctor::create($request->all());
+        $creator->create($request->all());
 
         Session::flash('flash_messenger', [
             'type'    => 'success',
