@@ -5,10 +5,8 @@ namespace App\Http\Controllers;
 
 use App\Doctor;
 use App\Http\Requests\DoctorStoreRequest;
-use Illuminate\Http\Request;
+use App\Http\Requests\DoctorUpdateRequest;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rule;
 
 class DoctorController extends Controller
 {
@@ -41,28 +39,11 @@ class DoctorController extends Controller
         return view('doctor.edit', compact('doctor'));
     }
 
-    public function update($doctor, Request $request)
+    public function update($doctor, DoctorUpdateRequest $request)
     {
         $doctor = Doctor::find($doctor);
 
-        $data = $request->all();
-
-        $validator = Validator::make($data, [
-            'name'      => 'required',
-            'specialty' => 'required',
-            'registry'  => [
-                'required',
-                Rule::unique('doctor')->ignore($doctor->id)
-            ]
-        ]);
-
-        if ($validator->fails()) {
-            return redirect()->route('doctor.edit', ['doctor' => $doctor->id])
-                ->withErrors($validator)
-                ->withInput();
-        }
-
-        $doctor->update($data);
+        $doctor->update($request->all());
 
         Session::flash('flash_messenger', [
             'type'    => 'success',
@@ -77,7 +58,8 @@ class DoctorController extends Controller
         $doctor = Doctor::find($doctor);
 
         $doctor->appointments()->delete();
-            $doctor->delete();
+
+        $doctor->delete();
 
         Session::flash('flash_messenger', [
             'type'    => 'success',
