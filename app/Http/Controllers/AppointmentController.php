@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use App\Appointment;
 use App\Doctor;
+use App\Http\Requests\AppointmentStoreRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
@@ -26,19 +27,8 @@ class AppointmentController extends Controller
         return view('appointment.create', compact('doctors'));
     }
 
-    public function store(Request $request)
+    public function store(AppointmentStoreRequest $request)
     {
-        $validator = Validator::make($request->all(), [
-            'doctor_id'    => 'required',
-            'patient_name' => 'required'
-        ]);
-
-        if ($validator->fails()) {
-            return redirect()->route('appointment.create')
-                ->withErrors($validator)
-                ->withInput();
-        }
-
         Appointment::create($request->all());
 
         Session::flash('flash_messenger', [
