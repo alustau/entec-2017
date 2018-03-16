@@ -1,7 +1,7 @@
 <?php
 namespace Tests\Controller;
 
-use App\Doctor;
+use App\Models\Doctor;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseTransactions;

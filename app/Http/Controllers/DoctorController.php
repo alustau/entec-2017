@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 
-use App\Doctor;
+use App\Models\Doctor;
 use App\Http\Requests\DoctorStoreRequest;
 use App\Http\Requests\DoctorUpdateRequest;
 use Illuminate\Support\Facades\Session;

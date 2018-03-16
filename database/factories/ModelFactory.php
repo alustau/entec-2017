@@ -12,7 +12,7 @@
 */
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
-$factory->define(App\User::class, function (Faker\Generator $faker) {
+$factory->define(App\Models\User::class, function (Faker\Generator $faker) {
     static $password;
 
     return [
@@ -23,7 +23,7 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
     ];
 });
 
-$factory->define(App\Doctor::class, function (Faker\Generator $faker) {
+$factory->define(App\Models\Doctor::class, function (Faker\Generator $faker) {
     $specialty = ['cardiologist', 'pediatrician', 'general'];
 
     return [
@@ -33,9 +33,9 @@ $factory->define(App\Doctor::class, function (Faker\Generator $faker) {
     ];
 });
 
-$factory->define(App\Appointment::class, function (Faker\Generator $faker) {
+$factory->define(App\Models\Appointment::class, function (Faker\Generator $faker) {
 
-    $doctor = factory(App\Doctor::class)->create();
+    $doctor = factory(App\Models\Doctor::class)->create();
 
     return [
         'doctor_id'    => $doctor->id,
