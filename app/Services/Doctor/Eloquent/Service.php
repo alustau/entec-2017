@@ -3,9 +3,10 @@ namespace App\Services\Doctor\Eloquent;
 
 use App\Contracts\Doctor\Creatable;
 use App\Contracts\Doctor\Listable;
+use App\Contracts\Doctor\Updatable;
 use App\Models\Doctor;
 
-class Service implements Listable, Creatable
+class Service implements Listable, Creatable, Updatable
 {
     protected $doctor;
 
@@ -31,5 +32,20 @@ class Service implements Listable, Creatable
     public function create(array $data)
     {
         return $this->doctor->create($data);
+    }
+
+    /**
+     * Update a doctor
+     * @param $doctor
+     * @param $data
+     * @return bool
+     */
+    public function update($doctor, $data): bool
+    {
+        if (! $doctor instanceof Doctor) {
+            $doctor = $this->doctor->find($doctor);
+        }
+
+        return $doctor->update($data);
     }
 }

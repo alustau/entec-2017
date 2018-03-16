@@ -2,6 +2,7 @@
 namespace Tests\Unit\Services\Doctor\Eloquent;
 
 use App\Contracts\Doctor\Listable;
+use App\Contracts\Doctor\Updatable;
 use App\Contracts\Doctor\Creatable;
 use App\Models\Doctor;
 use App\Services\Doctor\Eloquent\Service;
@@ -37,15 +38,6 @@ class ServiceTest extends TestCase
      * @test
      * @return void
      */
-    public function it_is_instance_of_creatable()
-    {
-        $this->assertInstanceOf(Creatable::class, $this->service);
-    }
-
-    /**
-     * @test
-     * @return void
-     */
     public function it_list_all_doctors()
     {
         $this->createDoctor();
@@ -61,7 +53,16 @@ class ServiceTest extends TestCase
      * @test
      * @return void
      */
-    public function it_create_a_new_doctor()
+    public function it_is_instance_of_creatable()
+    {
+        $this->assertInstanceOf(Creatable::class, $this->service);
+    }
+
+    /**
+     * @test
+     * @return void
+     */
+    public function it_creates_a_new_doctor()
     {
         $data = factory(Doctor::class)
             ->make()
@@ -72,5 +73,32 @@ class ServiceTest extends TestCase
         $this->assertEquals(1, Doctor::count());
 
         $this->assertInstanceOf(Doctor::class, $doctor);
+    }
+
+
+    /**
+     * @test
+     * @return void
+     */
+    public function it_is_instance_of_updatable()
+    {
+        $this->assertInstanceOf(Updatable::class, $this->service);
+    }
+
+    /**
+     * @test
+     * @return void
+     */
+    public function it_updates_a_doctor()
+    {
+        $doctor = $this->createDoctor(1)->first();
+
+        $updated = $this->service->update($doctor->id, [
+            'name' => 'Denis Alustau'
+        ]);
+
+        $this->assertTrue($updated);
+
+        $this->assertEquals('Denis Alustau', Doctor::find($doctor->id)->name);
     }
 }
