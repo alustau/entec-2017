@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 
+use App\Contracts\Doctor\Listable;
 use App\Models\Doctor;
 use App\Http\Requests\DoctorStoreRequest;
 use App\Http\Requests\DoctorUpdateRequest;
@@ -10,9 +11,9 @@ use Illuminate\Support\Facades\Session;
 
 class DoctorController extends Controller
 {
-    public function index()
+    public function index(Listable $lister)
     {
-        $doctors = Doctor::all();
+        $doctors = $lister->all();
 
         return view('doctor.index', compact('doctors'));
     }
