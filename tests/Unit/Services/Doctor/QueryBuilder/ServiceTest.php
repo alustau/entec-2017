@@ -9,7 +9,7 @@ use Illuminate\Support\Collection;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\Unit\Services\Doctor\CommumTests;
-use Tests\Unit\Services\Doctor\Helper;
+use Tests\Unit\Services\Helper;
 
 class ServiceTest extends TestCase
 {
