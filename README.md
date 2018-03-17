@@ -1,4 +1,4 @@
-entec-2017 [![Latest Stable Version](https://poser.pugx.org/gzero/eloquent-tree/v/stable.png)](https://packagist.org/packages/gzero/eloquent-tree) [![Total Downloads](https://poser.pugx.org/gzero/eloquent-tree/downloads.png)](https://packagist.org/packages/gzero/eloquent-tree) [![Build Status](https://travis-ci.org/AdrianSkierniewski/eloquent-tree.png)](https://travis-ci.org/AdrianSkierniewski/eloquent-tree)
+entec-2017 [![Latest Stable Version](https://poser.pugx.org/alustau/entec2017/v/stable)](https://packagist.org/packages/alustau/entec2017) [![Total Downloads](https://poser.pugx.org/gzero/alustau/entec2017/downloads.png)](https://packagist.org/packages/alustau/entec2017)
 =============
 
 Entec 2017 is a simple project with goal to use TDD  and SOLID principles
@@ -24,7 +24,7 @@ Entec 2017 is a simple project with goal to use TDD  and SOLID principles
 
 **Version 2.0 - TDD, SOLID principles**
 
-1- Begin by installing this package through Composer. You need run:
+1- Install this project through Composer. You need run:
 ```
 composer require alustau/entec2017
 ```
