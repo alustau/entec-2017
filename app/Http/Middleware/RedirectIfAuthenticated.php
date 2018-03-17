@@ -21,6 +21,8 @@ class RedirectIfAuthenticated
             return redirect('/home');
         }
 
+        $request->except('_token');
+
         return $next($request);
     }
 }
