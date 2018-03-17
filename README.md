@@ -28,7 +28,7 @@ Entec 2017 is a simple project with goal to use TDD  and SOLID principles
 ```shell
 $ git clone https://github.com/Alustau/entec-2017.git 
 ```
-2- YOu need checkout on the version.
+2- You need checkout on the version.
 ```shell
 $ git checkout tags/v2.0 
 ```
