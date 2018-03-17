@@ -24,7 +24,7 @@ Entec 2017 is a simple project with goal to use TDD  and SOLID principles
 
 **Version 2.0 - TDD, SOLID principles**
 
-1- Install this project through Composer. You need run:
+1- Install this project running this:
 ```shell
 $ git clone https://github.com/Alustau/entec-2017.git 
 ```
