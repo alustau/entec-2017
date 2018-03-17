@@ -3,10 +3,11 @@ namespace App\Services\Doctor\QueryBuilder;
 
 use App\Contracts\Doctor\Creatable;
 use App\Contracts\Doctor\Listable;
+use App\Contracts\Doctor\Updatable;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
-class Service implements Listable, Creatable
+class Service implements Listable, Creatable, Updatable
 {
 
     /**
@@ -37,5 +38,22 @@ class Service implements Listable, Creatable
         $result = DB::select('SELECT * FROM doctor ORDER BY id DESC LIMIT 1');
 
         return array_first($result);
+    }
+
+    /**
+     * Update a doctor
+     * @param $doctor
+     * @param $data
+     * @return bool
+     */
+    public function update($doctor, $data): bool
+    {
+        unset($data['_token']);
+
+        $timestamps = ['updated_at' => Carbon::now()];
+
+        return DB::table('doctor')
+            ->where('id', (int) $doctor)
+            ->update(array_merge($data, $timestamps));
     }
 }

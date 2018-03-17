@@ -4,6 +4,7 @@ namespace Tests\Unit\Services\Doctor\QueryBuilder;
 
 use App\Contracts\Doctor\Creatable;
 use App\Contracts\Doctor\Listable;
+use App\Contracts\Doctor\Updatable;
 use App\Models\Doctor;
 use App\Services\Doctor\QueryBuilder\Service;
 use Illuminate\Support\Collection;
@@ -77,5 +78,31 @@ class ServiceTest extends TestCase
         $this->assertEquals(1, Doctor::count());
 
         $this->assertInstanceOf(\stdClass::class, $doctor);
+    }
+
+    /**
+     * @test
+     * @return void
+     */
+    public function it_is_instance_of_updatable()
+    {
+        $this->assertInstanceOf(Updatable::class, $this->service);
+    }
+
+    /**
+     * @test
+     * @return void
+     */
+    public function it_updates_a_doctor()
+    {
+        $doctor = $this->createDoctor(1)->first();
+
+        $updated = $this->service->update($doctor->id, [
+            'name' => 'Denis Alustau'
+        ]);
+
+        $this->assertTrue($updated);
+
+        $this->assertEquals('Denis Alustau', Doctor::find($doctor->id)->name);
     }
 }
