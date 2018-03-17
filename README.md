@@ -8,7 +8,7 @@ Entec 2017 is a simple project with goal to use TDD  and SOLID principles
 - [Features](#features)
 - [Installation](#installation)
 
-##Features
+## Features
 
 * Create a Doctor
 * List all Doctors
