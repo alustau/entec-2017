@@ -1,15 +1,15 @@
 <?php
-namespace App\Contracts\Doctor;
+namespace App\Contracts\Appointment;
 
 
 /**
  * Interface Deletable
- * @package App\Contracts\Doctor
+ * @package App\Contracts\Appointment
  */
 interface Deletable
 {
     /**
-     * Delete a doctor
+     * Delete a Appointment
      * @param $id
      * @return mixed
      */

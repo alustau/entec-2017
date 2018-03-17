@@ -3,30 +3,33 @@
 namespace App\Http\Controllers;
 
 
+use App\Contracts\Appointment\Deletable;
+use App\Contracts\Appointment\Listable as AppointmentListable;
+use App\Contracts\Appointment\Creatable as AppointmentCreatable;
+use App\Contracts\Doctor\Listable as DoctorListable;
 use App\Models\Appointment;
-use App\Models\Doctor;
 use App\Http\Requests\AppointmentStoreRequest;
 use Illuminate\Support\Facades\Session;
 
 class AppointmentController extends Controller
 {
-    public function index()
+    public function index(AppointmentListable $lister)
     {
-        $appointments = Appointment::all();
+        $appointments = $lister->all();
 
         return view('appointment.index', compact('appointments'));
     }
 
-    public function create()
+    public function create(DoctorListable $lister)
     {
-        $doctors = Doctor::all();
+        $doctors = $lister->all();
 
         return view('appointment.create', compact('doctors'));
     }
 
-    public function store(AppointmentStoreRequest $request)
+    public function store(AppointmentStoreRequest $request, AppointmentCreatable $creator)
     {
-        Appointment::create($request->all());
+        $creator->create($request->all());
 
         Session::flash('flash_messenger', [
             'type'    => 'success',
@@ -36,11 +39,9 @@ class AppointmentController extends Controller
         return redirect()->route('appointments.index');
     }
 
-    public function delete($appointment)
+    public function delete($appointment, Deletable $deleter)
     {
-        $appointment = Appointment::find($appointment);
-
-        $appointment->delete();
+        $deleter->delete($appointment);
 
         Session::flash('flash_messenger', [
             'type'    => 'success',
