@@ -1,4 +1,4 @@
-entec-2017 [![Latest Stable Version](https://poser.pugx.org/alustau/entec2017/v/stable.png)](https://packagist.org/packages/alustau/entec2017) [![Total Downloads](https://poser.pugx.org/gzero/alustau/entec2017/downloads.png)]
+entec-2017 [![Latest Stable Version](https://poser.pugx.org/alustau/entec2017/v/stable.png)](https://packagist.org/packages/alustau/entec2017)[![Total Downloads](https://poser.pugx.org/gzero/alustau/entec2017/downloads.png)]
 =============
 
 Entec 2017 is a simple project with goal to use TDD  and SOLID principles
