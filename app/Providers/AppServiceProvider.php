@@ -10,6 +10,7 @@ use App\Contracts\Doctor\Deletable as DoctorDeletable;
 use App\Contracts\Doctor\Listable  as DoctorListable;
 use App\Contracts\Doctor\Updatable as DoctorUpdatable;
 use App\Services\Appointment\Eloquent\Service as AppointmentEloquentService;
+use App\Services\Appointment\QueryBuilder\Service as AppointmentQueryBuilderService;
 use App\Services\Doctor\Eloquent\Service as DoctorEloquentService;
 use App\Services\Doctor\QueryBuilder\Service as DoctorQueryBuilderService;
 use Illuminate\Support\ServiceProvider;
@@ -32,6 +33,7 @@ class AppServiceProvider extends ServiceProvider
                 break;
             case 'Query Builder':
                 $this->registerDoctorQueryBuilder();
+                $this->registerAppointmentQueryBuilder();
                 break;
         }
     }
@@ -57,5 +59,12 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(AppointmentListable::class, AppointmentEloquentService::class);
         $this->app->bind(AppointmentCreatable::class, AppointmentEloquentService::class);
         $this->app->bind(AppointmentDeletable::class, AppointmentEloquentService::class);
+    }
+
+    protected function registerAppointmentQueryBuilder()
+    {
+        $this->app->bind(AppointmentListable::class, AppointmentQueryBuilderService::class);
+        $this->app->bind(AppointmentCreatable::class, AppointmentQueryBuilderService::class);
+        $this->app->bind(AppointmentDeletable::class, AppointmentQueryBuilderService::class);
     }
 }
