@@ -41,6 +41,7 @@ class ServiceTest extends TestCase
 
         $this->assertInstanceOf(Collection::class, $doctors);
     }
+
     /**
      * @test
      * @return void
