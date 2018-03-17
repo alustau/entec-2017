@@ -20,7 +20,7 @@ Entec 2017 is a simple project with goal to use TDD  and SOLID principles
 
 ## Installation
 
-**Version 1.0 has no patterns.***
+**Version 1.0 has no patterns.**
 
 **Version 2.0 - TDD, SOLID principles**
 
