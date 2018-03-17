@@ -15,16 +15,6 @@ class AppServiceProvider extends ServiceProvider
     protected $type = 'Query Builder';
 
     /**
-     * Bootstrap any application services.
-     *
-     * @return void
-     */
-    public function boot()
-    {
-        //
-    }
-
-    /**
      * Register any application services.
      *
      * @return void

@@ -24,7 +24,7 @@
                             <label for="name">Doctor</label>
 
                             <select name="doctor_id" id="doctor_id" class="form-control">
-                                <option>Select a doctor</option>
+                                <option value>Select a doctor</option>
                                 @foreach ($doctors as $doctor)
                                     <option value="{{ $doctor->id }}">{{ $doctor->name }}</option>
                                 @endforeach
