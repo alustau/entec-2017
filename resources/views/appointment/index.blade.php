@@ -41,16 +41,16 @@
                                             {{ $appointment->id }}
                                         </td>
                                         <td>
-                                            {{ $appointment->doctor->name }}
+                                            {{ $appointment->doctor->name ?? $appointment->doctor_name }}
                                         </td>
                                         <td>
-                                            {{ $appointment->doctor->specialty }}
+                                            {{ $appointment->doctor->specialty ?? $appointment->doctor_specialty }}
                                         </td>
                                         <td>
                                             {{ $appointment->patient_name }}
                                         </td>
                                         <td>
-                                            {{ $appointment->created_at->format('d/m/Y H:i:s') }}
+                                            {{ is_object($appointment->created_at) ? $appointment->created_at->format('d/m/Y H:i:s') : \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $appointment->created_at)->format('d/m/Y H:i:s') }}
                                         </td>
                                         <td>
                                             <a class="btn btn-danger btn-xs" href="{{ route('appointment.delete', ['doctor' => $appointment->id]) }}">

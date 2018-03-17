@@ -1,9 +1,10 @@
 <?php
-namespace Tests\Unit\Services\Appointment\Eloquent;
+namespace Tests\Unit\Services\Appointment\QueryBuilder;
 
-use App\Contracts\Appointment\Deletable;
 use App\Models\Appointment;
-use App\Services\Appointment\Eloquent\Service;
+use App\Models\Doctor;
+use App\Services\Appointment\QueryBuilder\Service;
+use Illuminate\Support\Collection;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\Unit\Services\Appointment\CommumTests;
@@ -23,7 +24,22 @@ class ServiceTest extends TestCase
 
         $this->appointment = new Appointment;
 
-        $this->service = new Service($this->appointment);
+        $this->service = new Service;
+    }
+
+
+    /**
+     * @test
+     */
+    public function it_list_all_appointments()
+    {
+        $this->createAppointment();
+
+        $appointments = $this->service->all();
+
+        $this->assertCount(3, $appointments);
+
+        $this->assertInstanceOf(Collection::class, $appointments);
     }
 
     /**
@@ -41,16 +57,9 @@ class ServiceTest extends TestCase
 
         $this->assertEquals(1, $this->appointment->count());
 
-        $this->assertArrayHasKey('id', $appointment);
+        $this->assertArrayHasKey('id', (array) $appointment);
 
-        $this->assertInstanceOf(Appointment::class, $appointment);
+        $this->assertInstanceOf(\stdClass::class, $appointment);
     }
 
-    /**
-     * @test
-     */
-    public function it_implements_deletable()
-    {
-        $this->assertInstanceOf(Deletable::class, $this->service);
-    }
 }
