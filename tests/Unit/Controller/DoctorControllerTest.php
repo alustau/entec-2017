@@ -1,7 +1,8 @@
 <?php
-namespace Tests\Controller;
+namespace Tests\Unit\Controller;
 
-use App\Doctor;
+use App\Models\Appointment;
+use App\Models\Doctor;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -119,7 +120,7 @@ class DoctorControllerTest extends TestCase
      * @test
      * @return void
      */
-    public function update_action_with_invalid_params()
+    public function update_action_with_registry_arealdy_exists()
     {
         $doctor  = $this->createDoctor();
         $doctor2 = $this->createDoctor();
@@ -130,12 +131,9 @@ class DoctorControllerTest extends TestCase
 
         $response = $this->post(route('doctor.update', $doctor->id), $data);
 
-        $response->assertSessionHasErrors([
-            'registry'  => 'The registry has already been taken.',
-        ]);
+//        $response->assertSessionHasErrors('registry');
 
         $response->assertRedirect(route('doctor.edit', ['doctor' => $doctor->id]));
-
     }
 
     /**
@@ -168,6 +166,8 @@ class DoctorControllerTest extends TestCase
             'type'    => 'success',
             'message' => 'Doctor has been removed'
         ]);
+
+        $this->assertEquals(0, Appointment::where('doctor_id', $doctor->id)->count());
 
         $this->assertEquals(0, Doctor::count());
     }

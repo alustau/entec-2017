@@ -3,16 +3,20 @@
 namespace App\Http\Controllers;
 
 
-use App\Doctor;
+use App\Contracts\Doctor\Creatable;
+use App\Contracts\Doctor\Deletable;
+use App\Contracts\Doctor\Listable;
+use App\Contracts\Doctor\Updatable;
+use App\Models\Doctor;
 use App\Http\Requests\DoctorStoreRequest;
 use App\Http\Requests\DoctorUpdateRequest;
 use Illuminate\Support\Facades\Session;
 
 class DoctorController extends Controller
 {
-    public function index()
+    public function index(Listable $lister)
     {
-        $doctors = Doctor::all();
+        $doctors = $lister->all();
 
         return view('doctor.index', compact('doctors'));
     }
@@ -22,9 +26,9 @@ class DoctorController extends Controller
         return view('doctor.create');
     }
 
-    public function store(DoctorStoreRequest $request)
+    public function store(DoctorStoreRequest $request, Creatable $creator)
     {
-        Doctor::create($request->all());
+        $creator->create($request->all());
 
         Session::flash('flash_messenger', [
             'type'    => 'success',
@@ -39,27 +43,21 @@ class DoctorController extends Controller
         return view('doctor.edit', compact('doctor'));
     }
 
-    public function update($doctor, DoctorUpdateRequest $request)
+    public function update($doctor, DoctorUpdateRequest $request, Updatable $updater)
     {
-        $doctor = Doctor::find($doctor);
-
-        $doctor->update($request->all());
+        $updater->update($doctor, $request->all());
 
         Session::flash('flash_messenger', [
             'type'    => 'success',
             'message' => 'Doctor has been updated'
         ]);
 
-        return redirect()->route('doctor.edit', ['doctor' => $doctor->id]);
+        return redirect()->route('doctor.edit', ['doctor' => $doctor]);
     }
 
-    public function delete($doctor)
+    public function delete($doctor, Deletable $deleter)
     {
-        $doctor = Doctor::find($doctor);
-
-        $doctor->appointments()->delete();
-
-        $doctor->delete();
+        $deleter->delete($doctor);
 
         Session::flash('flash_messenger', [
             'type'    => 'success',

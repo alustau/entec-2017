@@ -1,8 +1,8 @@
 <?php
-namespace Tests\Controller;
+namespace Tests\Unit\Controller;
 
-use App\Appointment;
-use App\Doctor;
+use App\Models\Appointment;
+use App\Models\Doctor;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseTransactions;

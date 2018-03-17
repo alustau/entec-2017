@@ -3,13 +3,10 @@
 namespace App\Http\Controllers;
 
 
-use App\Appointment;
-use App\Doctor;
+use App\Models\Appointment;
+use App\Models\Doctor;
 use App\Http\Requests\AppointmentStoreRequest;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rule;
 
 class AppointmentController extends Controller
 {

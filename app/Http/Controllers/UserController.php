@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 
-use App\User;
+use App\Models\User;
 
 class UserController extends Controller
 {
