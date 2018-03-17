@@ -17,7 +17,7 @@ use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
-    protected $type = 'Query Builder';
+    protected $type = 'Eloquent';
 
     /**
      * Register any application services.
