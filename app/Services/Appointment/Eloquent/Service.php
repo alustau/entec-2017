@@ -4,9 +4,10 @@ namespace App\Services\Appointment\Eloquent;
 
 use App\Contracts\Appointment\Creatable;
 use App\Contracts\Appointment\Listable;
+use App\Contracts\Appointment\Deletable;
 use App\Models\Appointment;
 
-class Service implements Listable, Creatable
+class Service implements Listable, Creatable, Deletable
 {
     protected $appointment;
 
@@ -32,5 +33,19 @@ class Service implements Listable, Creatable
     public function create(array $data)
     {
         return $this->appointment->create($data);
+    }
+
+    /**
+     * Delete a doctor
+     * @param $id
+     * @return mixed
+     */
+    public function delete($appointment): bool
+    {
+        if (! $appointment instanceof Appointment) {
+            $appointment = Appointment::find($appointment);
+        }
+
+        return $appointment->delete();
     }
 }

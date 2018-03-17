@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 
+use App\Contracts\Appointment\Deletable;
 use App\Contracts\Appointment\Listable as AppointmentListable;
 use App\Contracts\Appointment\Creatable as AppointmentCreatable;
 use App\Contracts\Doctor\Listable as DoctorListable;
@@ -38,11 +39,9 @@ class AppointmentController extends Controller
         return redirect()->route('appointments.index');
     }
 
-    public function delete($appointment)
+    public function delete($appointment, Deletable $deleter)
     {
-        $appointment = Appointment::find($appointment);
-
-        $appointment->delete();
+        $deleter->delete($appointment);
 
         Session::flash('flash_messenger', [
             'type'    => 'success',
