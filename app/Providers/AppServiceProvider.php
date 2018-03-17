@@ -2,10 +2,12 @@
 
 namespace App\Providers;
 
-use App\Contracts\Doctor\Creatable;
-use App\Contracts\Doctor\Deletable;
-use App\Contracts\Doctor\Listable;
-use App\Contracts\Doctor\Updatable;
+use App\Contracts\Appointment\Listable as AppointmentListable;
+use App\Contracts\Doctor\Creatable as DoctorCreatable;
+use App\Contracts\Doctor\Deletable as DoctorDeletable;
+use App\Contracts\Doctor\Listable  as DoctorListable;
+use App\Contracts\Doctor\Updatable as DoctorUpdatable;
+use App\Services\Appointment\Eloquent\Service as AppointmentEloquentService;
 use App\Services\Doctor\Eloquent\Service as DoctorEloquentService;
 use App\Services\Doctor\QueryBuilder\Service as DoctorQueryBuilderService;
 use Illuminate\Support\ServiceProvider;
@@ -24,6 +26,7 @@ class AppServiceProvider extends ServiceProvider
         switch ($this->type) {
             case 'Eloquent':
                 $this->registerDoctorEloquent();
+                $this->registerAppointmentEloquent();
                 break;
             case 'Query Builder':
                 $this->registerDoctorQueryBuilder();
@@ -33,17 +36,22 @@ class AppServiceProvider extends ServiceProvider
 
     protected function registerDoctorEloquent()
     {
-        $this->app->bind(Listable::class, DoctorEloquentService::class);
-        $this->app->bind(Creatable::class, DoctorEloquentService::class);
-        $this->app->bind(Updatable::class, DoctorEloquentService::class);
-        $this->app->bind(Deletable::class, DoctorEloquentService::class);
+        $this->app->bind(DoctorListable::class, DoctorEloquentService::class);
+        $this->app->bind(DoctorCreatable::class, DoctorEloquentService::class);
+        $this->app->bind(DoctorUpdatable::class, DoctorEloquentService::class);
+        $this->app->bind(DoctorDeletable::class, DoctorEloquentService::class);
     }
 
     protected function registerDoctorQueryBuilder()
     {
-        $this->app->bind(Listable::class, DoctorQueryBuilderService::class);
-        $this->app->bind(Creatable::class, DoctorQueryBuilderService::class);
-        $this->app->bind(Updatable::class, DoctorQueryBuilderService::class);
-        $this->app->bind(Deletable::class, DoctorQueryBuilderService::class);
+        $this->app->bind(DoctorListable::class, DoctorQueryBuilderService::class);
+        $this->app->bind(DoctorCreatable::class, DoctorQueryBuilderService::class);
+        $this->app->bind(DoctorUpdatable::class, DoctorQueryBuilderService::class);
+        $this->app->bind(DoctorDeletable::class, DoctorQueryBuilderService::class);
+    }
+
+    protected function registerAppointmentEloquent()
+    {
+        $this->app->bind(AppointmentListable::class, AppointmentEloquentService::class);
     }
 }
