@@ -77,6 +77,8 @@ class ServiceTest extends TestCase
 
         $this->assertEquals(1, $this->doctor->count());
 
+        $this->assertArrayHasKey('id', $doctor);
+
         $this->assertInstanceOf(Doctor::class, $doctor);
     }
 

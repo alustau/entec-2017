@@ -2,7 +2,9 @@
 
 namespace Tests\Unit\Services\Doctor\QueryBuilder;
 
+use App\Contracts\Doctor\Creatable;
 use App\Contracts\Doctor\Listable;
+use App\Models\Doctor;
 use App\Services\Doctor\QueryBuilder\Service;
 use Illuminate\Support\Collection;
 use Tests\TestCase;
@@ -44,5 +46,36 @@ class ServiceTest extends TestCase
         $this->assertCount(3, $doctors);
 
         $this->assertInstanceOf(Collection::class, $doctors);
+    }
+
+
+    /**
+     * @test
+     * @return void
+     */
+    public function it_is_instance_of_creatable()
+    {
+        $this->assertInstanceOf(Creatable::class, $this->service);
+    }
+
+    /**
+     * @test
+     * @return void
+     */
+    public function it_creates_a_new_doctor()
+    {
+        $data = factory(Doctor::class)
+            ->make()
+            ->toArray();
+
+        $doctor = $this->service->create($data);
+
+        $this->assertNotEmpty($doctor);
+
+        $this->assertArrayHasKey('id', (array) $doctor);
+
+        $this->assertEquals(1, Doctor::count());
+
+        $this->assertInstanceOf(\stdClass::class, $doctor);
     }
 }
