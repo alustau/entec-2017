@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 
-use App\Contracts\Appointment\Listable;
+use App\Contracts\Appointment\Listable as AppointmentListable;
+use App\Contracts\Doctor\Listable as DoctorListable;
 use App\Models\Appointment;
 use App\Models\Doctor;
 use App\Http\Requests\AppointmentStoreRequest;
@@ -11,16 +12,16 @@ use Illuminate\Support\Facades\Session;
 
 class AppointmentController extends Controller
 {
-    public function index(Listable $lister)
+    public function index(AppointmentListable $lister)
     {
         $appointments = $lister->all();
 
         return view('appointment.index', compact('appointments'));
     }
 
-    public function create()
+    public function create(DoctorListable $lister)
     {
-        $doctors = Doctor::all();
+        $doctors = $lister->all();
 
         return view('appointment.create', compact('doctors'));
     }
