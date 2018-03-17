@@ -30,7 +30,7 @@ $ git clone https://github.com/Alustau/entec-2017.git
 ```
 2- YOu need checkout on the version.
 ```shell
-$ $ git checkout tags/v2.0 
+$ git checkout tags/v2.0 
 ```
 3- Next, you should set up your .env through .env.example.
 
