@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Contracts\Appointment\Creatable as AppointmentCreatable;
 use App\Contracts\Appointment\Listable as AppointmentListable;
 use App\Contracts\Doctor\Creatable as DoctorCreatable;
 use App\Contracts\Doctor\Deletable as DoctorDeletable;
@@ -53,5 +54,6 @@ class AppServiceProvider extends ServiceProvider
     protected function registerAppointmentEloquent()
     {
         $this->app->bind(AppointmentListable::class, AppointmentEloquentService::class);
+        $this->app->bind(AppointmentCreatable::class, AppointmentEloquentService::class);
     }
 }

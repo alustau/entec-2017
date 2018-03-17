@@ -2,6 +2,7 @@
 namespace Tests\Unit\Services\Appointment\Eloquent;
 
 use App\Contracts\Appointment\Listable;
+use App\Contracts\Appointment\Creatable;
 use App\Models\Appointment;
 use App\Services\Appointment\Eloquent\Service;
 use Illuminate\Support\Collection;
@@ -46,5 +47,34 @@ class ServiceTest extends TestCase
         $this->assertCount(3, $appointments);
 
         $this->assertInstanceOf(Collection::class, $appointments);
+    }
+
+    /**
+     * @test
+     */
+    public function it_implements_creatable()
+    {
+        $this->assertInstanceOf(Creatable::class, $this->service);
+    }
+
+
+    /**
+     * @test
+     * @return void
+     */
+    public function it_creates_a_new_appointment()
+    {
+        $doctor = $this->createDoctor(1)->first();
+
+        $appointment = $this->service->create([
+            'doctor_id'    => $doctor->id,
+            'patient_name' => 'Denis Alustau',
+        ]);
+
+        $this->assertEquals(1, $this->appointment->count());
+
+        $this->assertArrayHasKey('id', $appointment);
+
+        $this->assertInstanceOf(Appointment::class, $appointment);
     }
 }

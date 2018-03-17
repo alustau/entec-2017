@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 
 use App\Contracts\Appointment\Listable as AppointmentListable;
+use App\Contracts\Appointment\Creatable as AppointmentCreatable;
 use App\Contracts\Doctor\Listable as DoctorListable;
 use App\Models\Appointment;
-use App\Models\Doctor;
 use App\Http\Requests\AppointmentStoreRequest;
 use Illuminate\Support\Facades\Session;
 
@@ -26,9 +26,9 @@ class AppointmentController extends Controller
         return view('appointment.create', compact('doctors'));
     }
 
-    public function store(AppointmentStoreRequest $request)
+    public function store(AppointmentStoreRequest $request, AppointmentCreatable $creator)
     {
-        Appointment::create($request->all());
+        $creator->create($request->all());
 
         Session::flash('flash_messenger', [
             'type'    => 'success',
