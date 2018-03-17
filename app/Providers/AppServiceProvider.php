@@ -54,9 +54,6 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(Listable::class, DoctorQueryBuilderService::class);
         $this->app->bind(Creatable::class, DoctorQueryBuilderService::class);
         $this->app->bind(Updatable::class, DoctorQueryBuilderService::class);
-//        $this->app->bind(Deletable::class, DoctorQueryBuilderService::class);
-
-//        $this->app->bind(Updatable::class, DoctorEloquentService::class);
-        $this->app->bind(Deletable::class, DoctorEloquentService::class);
+        $this->app->bind(Deletable::class, DoctorQueryBuilderService::class);
     }
 }

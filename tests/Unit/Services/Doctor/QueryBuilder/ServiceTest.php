@@ -2,19 +2,18 @@
 
 namespace Tests\Unit\Services\Doctor\QueryBuilder;
 
-use App\Contracts\Doctor\Creatable;
-use App\Contracts\Doctor\Listable;
-use App\Contracts\Doctor\Updatable;
+use App\Models\Appointment;
 use App\Models\Doctor;
 use App\Services\Doctor\QueryBuilder\Service;
 use Illuminate\Support\Collection;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Tests\Unit\Services\Doctor\CommumTests;
 use Tests\Unit\Services\Doctor\Helper;
 
 class ServiceTest extends TestCase
 {
-    use DatabaseTransactions, Helper;
+    use DatabaseTransactions, Helper, CommumTests;
 
     protected $service;
 
@@ -23,15 +22,6 @@ class ServiceTest extends TestCase
         parent::setUp();
 
         $this->service = new Service;
-    }
-
-    /**
-     * @test
-     * @return void
-     */
-    public function it_is_instance_of_listable()
-    {
-        $this->assertInstanceOf(Listable::class, $this->service);
     }
 
     /**
@@ -47,16 +37,6 @@ class ServiceTest extends TestCase
         $this->assertCount(3, $doctors);
 
         $this->assertInstanceOf(Collection::class, $doctors);
-    }
-
-
-    /**
-     * @test
-     * @return void
-     */
-    public function it_is_instance_of_creatable()
-    {
-        $this->assertInstanceOf(Creatable::class, $this->service);
     }
 
     /**
@@ -84,15 +64,6 @@ class ServiceTest extends TestCase
      * @test
      * @return void
      */
-    public function it_is_instance_of_updatable()
-    {
-        $this->assertInstanceOf(Updatable::class, $this->service);
-    }
-
-    /**
-     * @test
-     * @return void
-     */
     public function it_updates_a_doctor()
     {
         $doctor = $this->createDoctor(1)->first();
@@ -104,5 +75,22 @@ class ServiceTest extends TestCase
         $this->assertTrue($updated);
 
         $this->assertEquals('Denis Alustau', Doctor::find($doctor->id)->name);
+    }
+
+    /**
+     * @test
+     * @return void
+     */
+    public function it_deletes_a_doctor()
+    {
+        $doctor = factory(Appointment::class)->create()->doctor;
+
+        $deleted = $this->service->delete($doctor->id);
+
+        $this->assertTrue($deleted);
+
+        $this->assertEquals(0, Appointment::where('doctor_id', $doctor->id)->count());
+
+        $this->assertEmpty(Doctor::find($doctor->id));
     }
 }
