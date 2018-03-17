@@ -2,8 +2,10 @@
 namespace Tests\Unit\Services\Doctor\Eloquent;
 
 use App\Contracts\Doctor\Listable;
-use App\Contracts\Doctor\Updatable;
 use App\Contracts\Doctor\Creatable;
+use App\Contracts\Doctor\Updatable;
+use App\Contracts\Doctor\Deletable;
+use App\Models\Appointment;
 use App\Models\Doctor;
 use App\Services\Doctor\Eloquent\Service;
 use Illuminate\Support\Collection;
@@ -17,12 +19,15 @@ class ServiceTest extends TestCase
 
     protected $service;
 
+    protected $doctor;
 
     public function setUp()
     {
         parent::setUp();
 
-        $this->service = new Service(new Doctor);
+        $this->doctor = new Doctor;
+
+        $this->service = new Service($this->doctor);
     }
 
     /**
@@ -70,7 +75,7 @@ class ServiceTest extends TestCase
 
         $doctor = $this->service->create($data);
 
-        $this->assertEquals(1, Doctor::count());
+        $this->assertEquals(1, $this->doctor->count());
 
         $this->assertInstanceOf(Doctor::class, $doctor);
     }
@@ -99,6 +104,32 @@ class ServiceTest extends TestCase
 
         $this->assertTrue($updated);
 
-        $this->assertEquals('Denis Alustau', Doctor::find($doctor->id)->name);
+        $this->assertEquals('Denis Alustau', $this->doctor->find($doctor->id)->name);
+    }
+
+    /**
+     * @test
+     * @return void
+     */
+    public function it_is_instance_of_deletable()
+    {
+        $this->assertInstanceOf(Deletable::class, $this->service);
+    }
+
+    /**
+     * @test
+     * @return void
+     */
+    public function it_delete_a_doctor()
+    {
+        $doctor = $this->createDoctor(1)->first();
+
+        $deleted = $this->service->delete($doctor->id);
+
+        $this->assertTrue($deleted);
+
+        $this->assertEquals(0, Appointment::where('doctor_id', $doctor->id)->count());
+
+        $this->assertEmpty($this->doctor->find($doctor->id));
     }
 }

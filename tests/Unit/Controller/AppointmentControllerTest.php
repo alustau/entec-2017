@@ -1,5 +1,5 @@
 <?php
-namespace Tests\Controller;
+namespace Tests\Unit\Controller;
 
 use App\Models\Appointment;
 use App\Models\Doctor;

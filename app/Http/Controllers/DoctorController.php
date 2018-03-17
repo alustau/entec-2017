@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 
 use App\Contracts\Doctor\Creatable;
+use App\Contracts\Doctor\Deletable;
 use App\Contracts\Doctor\Listable;
 use App\Contracts\Doctor\Updatable;
 use App\Models\Doctor;
@@ -54,13 +55,9 @@ class DoctorController extends Controller
         return redirect()->route('doctor.edit', ['doctor' => $doctor]);
     }
 
-    public function delete($doctor)
+    public function delete($doctor, Deletable $deleter)
     {
-        $doctor = Doctor::find($doctor);
-
-        $doctor->appointments()->delete();
-
-        $doctor->delete();
+        $deleter->delete($doctor);
 
         Session::flash('flash_messenger', [
             'type'    => 'success',

@@ -1,6 +1,7 @@
 <?php
-namespace Tests\Controller;
+namespace Tests\Unit\Controller;
 
+use App\Models\Appointment;
 use App\Models\Doctor;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
@@ -165,6 +166,8 @@ class DoctorControllerTest extends TestCase
             'type'    => 'success',
             'message' => 'Doctor has been removed'
         ]);
+
+        $this->assertEquals(0, Appointment::where('doctor_id', $doctor->id)->count());
 
         $this->assertEquals(0, Doctor::count());
     }
