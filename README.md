@@ -29,13 +29,21 @@ Entec 2017 is a simple project with goal to use TDD  and SOLID principles
 ```shell
 $ git clone https://github.com/Alustau/entec-2017.git 
 ```
-2- You need checkout on the version.
+2- Enter in project folder.
+```shell
+$ cd entec-2017
+```
+3- Install the dependencies.
+```shell
+$ composer install
+```
+4- Checkout on stable version.
 ```shell
 $ git checkout tags/v2.0 
 ```
-3- Next, you should set up your .env through .env.example.
+5- Set up your .env through .env.example.
 
-4- Next, you must start server using:
+6- Start server using:
 ```shell
 $ php artisan serve
 ```
