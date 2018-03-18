@@ -2,10 +2,13 @@
 
 namespace Tests\Unit\Services\Doctor\QueryBuilder;
 
+use App\Contracts\Doctor\Listable;
 use App\Models\Appointment;
 use App\Models\Doctor;
+use App\Services\Doctor\QueryBuilder\ListService;
 use App\Services\Doctor\QueryBuilder\Service;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\Unit\Services\Doctor\CommumTests;
@@ -17,11 +20,25 @@ class ServiceTest extends TestCase
 
     protected $service;
 
+    protected $query;
+
     public function setUp()
     {
         parent::setUp();
 
         $this->service = new Service;
+
+        $this->query = DB::getFacadeRoot()->query();
+    }
+
+
+    /**
+     * @test
+     * @return void
+     */
+    public function it_is_instance_of_listable()
+    {
+        $this->assertInstanceOf(Listable::class, new ListService($this->query));
     }
 
     /**
@@ -32,7 +49,7 @@ class ServiceTest extends TestCase
     {
         $this->createDoctor();
 
-        $doctors = $this->service->all();
+        $doctors = (new ListService($this->query))->all();
 
         $this->assertCount(3, $doctors);
 

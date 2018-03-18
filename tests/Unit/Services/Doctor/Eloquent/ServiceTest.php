@@ -34,7 +34,7 @@ class ServiceTest extends TestCase
      */
     public function it_is_instance_of_listable()
     {
-        $this->assertInstanceOf(Listable::class, new ListService(new Doctor));
+        $this->assertInstanceOf(Listable::class, new ListService($this->doctor));
     }
 
     /**

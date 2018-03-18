@@ -15,6 +15,7 @@ Entec 2017 is a simple project with goal to use TDD  and SOLID principles
 * Update a Doctor
 * Remove a Doctor and its appointments
 * Create Appointment
+* List all Appointments
 * Remove Appointment
 
 

@@ -18,7 +18,6 @@ class Service implements Listable, Creatable, Updatable, Deletable
      */
     public function all()
     {
-        return DB::table($this->table)->get();
     }
 
     /**

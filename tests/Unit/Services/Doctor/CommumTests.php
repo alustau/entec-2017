@@ -13,16 +13,6 @@ use App\Services\Doctor\Eloquent\Service;
 trait CommumTests
 {
     protected $doctor;
-    protected $lister;
-
-    /**
-     * @test
-     * @return void
-     */
-    public function it_is_instance_of_listable()
-    {
-        $this->assertInstanceOf(Listable::class, new ListService(new Doctor));
-    }
 
     /**
      * @test
