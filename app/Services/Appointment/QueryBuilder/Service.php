@@ -51,6 +51,7 @@ class Service implements Listable, Creatable, Deletable
      */
     public function all()
     {
+        //todo: it's breaking the Liskov substitution principle
         return DB::table($this->table)
             ->join('doctor as d', 'appointment.doctor_id', '=', 'd.id')
             ->select('appointment.*', 'd.name as doctor_name', 'd.specialty as doctor_specialty')

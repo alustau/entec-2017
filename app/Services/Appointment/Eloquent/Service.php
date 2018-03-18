@@ -23,6 +23,7 @@ class Service implements Listable, Creatable, Deletable
      */
     public function all()
     {
+        //todo: it's breaking the Liskov substitution principle
         return $this->appointment->all();
     }
 
