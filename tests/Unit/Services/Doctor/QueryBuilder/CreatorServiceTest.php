@@ -17,7 +17,7 @@ use Tests\Unit\Services\Doctor\CommumAsserts;
 use Tests\Unit\Services\Doctor\CommumTests;
 use Tests\Unit\Services\Helper;
 
-class ServiceTest extends TestCase
+class CreatorServiceTest extends TestCase
 {
     use DatabaseTransactions, Helper, CommumTests, CommumAsserts;
 
@@ -36,6 +36,46 @@ class ServiceTest extends TestCase
         $this->query = DB::getFacadeRoot()->query();
 
         $this->list = $this->prophesize(Listable::class);
+    }
+
+
+    /**
+     * @test
+     * @return void
+     */
+    public function it_is_instance_of_listable()
+    {
+        $this->assertInstanceOf(Listable::class, new ListService($this->query));
+    }
+
+    /**
+     * @test
+     * @return void
+     */
+    public function list_all_doctors()
+    {
+        $this->createDoctor();
+
+        $doctors = (new ListService($this->query))->all();
+
+        $this->assertCount(3, $doctors);
+
+        $this->assertInstanceOf(Collection::class, $doctors);
+    }
+
+    /**
+     * @test
+     * @return void
+     */
+    public function list_last_doctors()
+    {
+        $this->createDoctor();
+
+        $doctors = (new ListService($this->query))->all();
+
+        $this->assertCount(3, $doctors);
+
+        $this->assertInstanceOf(Collection::class, $doctors);
     }
 
     /**

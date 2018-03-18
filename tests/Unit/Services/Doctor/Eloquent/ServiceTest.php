@@ -35,34 +35,6 @@ class ServiceTest extends TestCase
      * @test
      * @return void
      */
-    public function it_is_instance_of_creatable()
-    {
-        $this->assertInstanceOf(Creatable::class, new CreatorService($this->doctor));
-    }
-
-    /**
-     * @test
-     * @return void
-     */
-    public function it_creates_a_new_doctor()
-    {
-        $data = factory(Doctor::class)
-            ->make()
-            ->toArray();
-
-        $doctor = (new CreatorService($this->doctor))->create($data);
-
-        $this->assertEquals(1, $this->doctor->count());
-
-        $this->hasDoctorAttribute($doctor);
-
-        $this->assertTrue(is_array($doctor));
-    }
-
-    /**
-     * @test
-     * @return void
-     */
     public function it_updates_a_doctor()
     {
         $doctor = $this->createDoctor(1)->first();
