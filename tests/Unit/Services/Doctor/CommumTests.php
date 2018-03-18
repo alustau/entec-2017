@@ -6,16 +6,22 @@ use App\Contracts\Doctor\Creatable;
 use App\Contracts\Doctor\Deletable;
 use App\Contracts\Doctor\Listable;
 use App\Contracts\Doctor\Updatable;
+use App\Models\Doctor;
+use App\Services\Doctor\Eloquent\ListService;
+use App\Services\Doctor\Eloquent\Service;
 
 trait CommumTests
 {
+    protected $doctor;
+    protected $lister;
+
     /**
      * @test
      * @return void
      */
     public function it_is_instance_of_listable()
     {
-        $this->assertInstanceOf(Listable::class, $this->service);
+        $this->assertInstanceOf(Listable::class, new ListService(new Doctor));
     }
 
     /**

@@ -1,8 +1,10 @@
 <?php
 namespace Tests\Unit\Services\Doctor\Eloquent;
 
+use App\Contracts\Doctor\Listable;
 use App\Models\Appointment;
 use App\Models\Doctor;
+use App\Services\Doctor\Eloquent\ListService;
 use App\Services\Doctor\Eloquent\Service;
 use Illuminate\Support\Collection;
 use Tests\TestCase;
@@ -16,15 +18,23 @@ class ServiceTest extends TestCase
 
     protected $service;
 
-    protected $doctor;
 
     public function setUp()
     {
         parent::setUp();
 
-        $this->doctor = new Doctor;
+        $this->doctor = new Doctor();
 
         $this->service = new Service($this->doctor);
+    }
+
+    /**
+     * @test
+     * @return void
+     */
+    public function it_is_instance_of_listable()
+    {
+        $this->assertInstanceOf(Listable::class, new ListService(new Doctor));
     }
 
     /**
@@ -35,7 +45,9 @@ class ServiceTest extends TestCase
     {
         $this->createDoctor();
 
-        $doctors = $this->service->all();
+        $list = new ListService($this->doctor);
+
+        $doctors = $list->all();
 
         $this->assertCount(3, $doctors);
 
