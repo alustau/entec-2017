@@ -2,38 +2,39 @@
 
 namespace Tests\Unit\Services\Doctor\QueryBuilder;
 
-use App\Contracts\Doctor\Creatable;
-use App\Contracts\Doctor\Listable;
+use App\Contracts\Doctor\Deletable;
 use App\Models\Appointment;
 use App\Models\Doctor;
-use App\Services\Doctor\QueryBuilder\Service;
-use App\Services\Doctor\QueryBuilder\CreatorService;
+use App\Services\Doctor\QueryBuilder\DeleterService;
 use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Tests\Unit\Services\Doctor\CommumAsserts;
-use Tests\Unit\Services\Doctor\CommumTests;
 use Tests\Unit\Services\Helper;
 
-class ServiceTest extends TestCase
+class DeleterServiceTest extends TestCase
 {
-    use DatabaseTransactions, Helper, CommumTests, CommumAsserts;
+    use DatabaseTransactions, Helper;
 
     protected $service;
 
     protected $query;
 
-    protected $list;
-
     public function setUp()
     {
         parent::setUp();
 
-        $this->service = new Service;
+        $query = DB::getFacadeRoot()->query();
 
-        $this->query = DB::getFacadeRoot()->query();
+        $this->service = new DeleterService($query);
+    }
 
-        $this->list = $this->prophesize(Listable::class);
+    /**
+     * @test
+     * @return void
+     */
+    public function it_is_instance_of_deletable()
+    {
+        $this->assertInstanceOf(Deletable::class, $this->service);
     }
 
     /**
@@ -42,8 +43,8 @@ class ServiceTest extends TestCase
      */
     public function it_deletes_a_doctor()
     {
-        $doctor = factory(Appointment::class)->create()->doctor;
-
+        $doctor = $this->createAppointment(1)->first()->doctor;
+//        dd(Appointment::all()->toArray(), $doctor->toArray());
         $deleted = $this->service->delete($doctor->id);
 
         $this->assertTrue($deleted);

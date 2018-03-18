@@ -16,6 +16,7 @@ abstract class ServiceAbstract
     protected $query;
 
     /**
+     * Main table
      * @var string
      */
     protected $table = 'doctor';

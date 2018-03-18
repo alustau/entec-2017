@@ -7,7 +7,7 @@ use App\Contracts\Doctor\Listable;
 use App\Models\Appointment;
 use App\Models\Doctor;
 use App\Services\Doctor\QueryBuilder\ListService;
-use App\Services\Doctor\QueryBuilder\Service;
+use App\Services\Doctor\QueryBuilder\DeleterService;
 use App\Services\Doctor\QueryBuilder\CreatorService;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
@@ -26,17 +26,13 @@ class ListServiceTest extends TestCase
 
     protected $query;
 
-    protected $list;
-
     public function setUp()
     {
         parent::setUp();
 
-        $this->service = new Service;
-
         $query = DB::getFacadeRoot()->query();
 
-        $this->list = new ListService($query);
+        $this->service = new ListService($query);
     }
 
 
@@ -46,7 +42,7 @@ class ListServiceTest extends TestCase
      */
     public function it_is_instance_of_listable()
     {
-        $this->assertInstanceOf(Listable::class, $this->list);
+        $this->assertInstanceOf(Listable::class, $this->service);
     }
 
     /**
@@ -57,7 +53,7 @@ class ListServiceTest extends TestCase
     {
         $this->createDoctor();
 
-        $doctors = $this->list->all();
+        $doctors = $this->service->all();
 
         $this->assertCount(3, $doctors);
 
@@ -72,7 +68,7 @@ class ListServiceTest extends TestCase
     {
         $lastDoctor = $this->createDoctor()->last();
 
-        $last = $this->list->last();
+        $last = $this->service->last();
 
         $this->hasDoctorAttribute($last);
 

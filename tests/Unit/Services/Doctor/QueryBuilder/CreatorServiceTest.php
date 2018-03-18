@@ -7,7 +7,7 @@ use App\Contracts\Doctor\Listable;
 use App\Models\Appointment;
 use App\Models\Doctor;
 use App\Services\Doctor\QueryBuilder\ListService;
-use App\Services\Doctor\QueryBuilder\Service;
+use App\Services\Doctor\QueryBuilder\DeleterService;
 use App\Services\Doctor\QueryBuilder\CreatorService;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
