@@ -33,13 +33,13 @@ $ git clone https://github.com/Alustau/entec-2017.git
 ```shell
 $ cd entec-2017
 ```
-3- Install the dependencies.
-```shell
-$ composer install
-```
-4- Checkout on stable version.
+3- Checkout on stable version.
 ```shell
 $ git checkout tags/v2.0 
+```
+4- Install the dependencies.
+```shell
+$ composer install
 ```
 5- Set up your .env through .env.example.
 
@@ -52,6 +52,7 @@ $ php artisan serve
 You can swap between Query Builder or Eloquent services
 ```php
 namespace App\Providers;
+
 use ...;
 
 class AppServiceProvider extends ServiceProvider
