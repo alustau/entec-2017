@@ -40,23 +40,6 @@ class ServiceTest extends TestCase
      * @test
      * @return void
      */
-    public function it_updates_a_doctor()
-    {
-        $doctor = $this->createDoctor(1)->first();
-
-        $updated = $this->service->update($doctor->id, [
-            'name' => 'Denis Alustau'
-        ]);
-
-        $this->assertTrue($updated);
-
-        $this->assertEquals('Denis Alustau', Doctor::find($doctor->id)->name);
-    }
-
-    /**
-     * @test
-     * @return void
-     */
     public function it_deletes_a_doctor()
     {
         $doctor = factory(Appointment::class)->create()->doctor;

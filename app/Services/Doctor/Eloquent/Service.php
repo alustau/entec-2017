@@ -7,7 +7,7 @@ use App\Contracts\Doctor\Listable;
 use App\Contracts\Doctor\Updatable;
 use App\Models\Doctor;
 
-class Service implements Updatable, Deletable
+class Service implements  Deletable
 {
     use Helper;
 
@@ -16,19 +16,6 @@ class Service implements Updatable, Deletable
     public function __construct(Doctor $doctor)
     {
         $this->doctor = $doctor;
-    }
-
-    /**
-     * Update a doctor
-     * @param $doctor
-     * @param $data
-     * @return bool
-     */
-    public function update($doctor, $data): bool
-    {
-        $doctor = $this->find($doctor);
-
-        return $doctor->update($data);
     }
 
     /**
