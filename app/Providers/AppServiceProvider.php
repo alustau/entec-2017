@@ -65,7 +65,10 @@ class AppServiceProvider extends ServiceProvider
             return new DoctorQueryBuilderCreatorService($query, $lister);
         });
 
-        $this->app->bind(DoctorUpdatable::class, DoctorQueryBuilderService::class);
+        $this->app->bind(DoctorUpdatable::class, function () use ($query) {
+            return new DoctorQueryBuilderService($query);
+        });
+
         $this->app->bind(DoctorDeletable::class, DoctorQueryBuilderService::class);
     }
 

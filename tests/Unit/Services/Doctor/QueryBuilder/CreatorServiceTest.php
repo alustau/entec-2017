@@ -19,7 +19,7 @@ use Tests\Unit\Services\Helper;
 
 class CreatorServiceTest extends TestCase
 {
-    use DatabaseTransactions, Helper, CommumTests, CommumAsserts;
+    use DatabaseTransactions, Helper, CommumAsserts;
 
     protected $service;
 
@@ -31,11 +31,11 @@ class CreatorServiceTest extends TestCase
     {
         parent::setUp();
 
-        $this->service = new Service;
-
         $this->query = DB::getFacadeRoot()->query();
 
         $this->list = $this->prophesize(Listable::class);
+
+        $this->service = new CreatorService($this->query, $this->list->reveal());
     }
 
     /**
@@ -44,7 +44,7 @@ class CreatorServiceTest extends TestCase
      */
     public function it_is_instance_of_creatable()
     {
-        $this->assertInstanceOf(Creatable::class, new CreatorService($this->query, $this->list->reveal()));
+        $this->assertInstanceOf(Creatable::class, $this->service);
     }
 
     /**
@@ -61,7 +61,7 @@ class CreatorServiceTest extends TestCase
             ->shouldBeCalled()
             ->willReturn(array_merge($data, ['id' => 1]));
 
-        $doctor = (new CreatorService($this->query, $this->list->reveal()))->create($data);
+        $doctor = $this->service->create($data);
 
         $this->assertNotEmpty($doctor);
 
