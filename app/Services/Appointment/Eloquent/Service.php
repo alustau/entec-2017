@@ -6,6 +6,7 @@ use App\Contracts\Appointment\Creatable;
 use App\Contracts\Appointment\Listable;
 use App\Contracts\Appointment\Deletable;
 use App\Models\Appointment;
+use App\Models\Doctor;
 
 class Service implements Listable, Creatable, Deletable
 {
@@ -47,5 +48,19 @@ class Service implements Listable, Creatable, Deletable
         }
 
         return $appointment->delete();
+    }
+
+    /**
+     * Delete all appointments from a doctor
+     * @param $doctor
+     * @return bool
+     */
+    public function deleteAll($doctor): bool
+    {
+        if (! $doctor instanceof Doctor) {
+            $doctor = Doctor::find($doctor);
+        }
+
+        return $doctor->appointments()->delete();
     }
 }

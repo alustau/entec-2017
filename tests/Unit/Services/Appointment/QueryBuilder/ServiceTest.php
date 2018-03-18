@@ -61,5 +61,4 @@ class ServiceTest extends TestCase
 
         $this->assertInstanceOf(\stdClass::class, $appointment);
     }
-
 }

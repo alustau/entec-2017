@@ -5,6 +5,7 @@ namespace App\Services\Appointment\QueryBuilder;
 use App\Contracts\Appointment\Creatable;
 use App\Contracts\Appointment\Listable;
 use App\Contracts\Appointment\Deletable;
+use App\Models\Doctor;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
@@ -54,5 +55,23 @@ class Service implements Listable, Creatable, Deletable
             ->join('doctor as d', 'appointment.doctor_id', '=', 'd.id')
             ->select('appointment.*', 'd.name as doctor_name', 'd.specialty as doctor_specialty')
             ->get();
+    }
+
+    /**
+     * Delete all appointments from a doctor
+     * @param $doctor
+     * @return bool
+     */
+    public function deleteAll($doctor): bool
+    {
+        if ($doctor instanceof Doctor) {
+            $doctor = $doctor->id;
+        }
+
+        $deleteds = DB::table($this->table)
+            ->where('doctor_id', (int) $doctor)
+            ->delete();
+
+        return count($deleteds) > 0;
     }
 }

@@ -72,7 +72,9 @@ class AppServiceProvider extends ServiceProvider
         });
 
         $this->app->bind(DoctorDeletable::class, function () use ($query) {
-            return new DoctorQueryBuilderDeleterService($query);
+            $service = new AppointmentQueryBuilderService;
+
+            return new DoctorQueryBuilderDeleterService($query, $service);
         });
     }
 

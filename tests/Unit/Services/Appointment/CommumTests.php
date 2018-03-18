@@ -67,4 +67,25 @@ trait CommumTests
 
         $this->assertEmpty($this->appointment->find($appointment->id));
     }
+
+
+    /**
+     * @test
+     */
+    public function it_delete_all_appointments_from_doctor()
+    {
+        $doctor = $this->createDoctor(1)->first();
+
+        factory(Appointment::class, 3)->create([
+            'doctor_id' => $doctor->id
+        ]);
+
+        $this->createAppointment(1);
+
+        $deleted = $this->service->deleteAll($doctor->id);
+
+        $this->assertTrue($deleted);
+
+        $this->assertEquals(1, Appointment::count());
+    }
 }

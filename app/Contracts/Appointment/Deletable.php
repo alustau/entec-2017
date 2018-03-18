@@ -14,4 +14,11 @@ interface Deletable
      * @return mixed
      */
     public function delete($id): bool;
+
+    /**
+     * Delete all appointments from a doctor
+     * @param $doctor
+     * @return bool
+     */
+    public function deleteAll($doctor): bool;
 }

@@ -2,6 +2,7 @@
 
 namespace Tests\Unit\Services\Doctor\QueryBuilder;
 
+use App\Contracts\Appointment\Deletable as AppointmentDeletable;
 use App\Contracts\Doctor\Deletable;
 use App\Models\Appointment;
 use App\Models\Doctor;
@@ -19,13 +20,17 @@ class DeleterServiceTest extends TestCase
 
     protected $query;
 
+    protected $appointment;
+
     public function setUp()
     {
         parent::setUp();
 
         $query = DB::getFacadeRoot()->query();
 
-        $this->service = new DeleterService($query);
+        $this->appointment = $this->prophesize(AppointmentDeletable::class);
+
+        $this->service = new DeleterService($query, $this->appointment->reveal());
     }
 
     /**
@@ -44,12 +49,15 @@ class DeleterServiceTest extends TestCase
     public function it_deletes_a_doctor()
     {
         $doctor = $this->createAppointment(1)->first()->doctor;
-//        dd(Appointment::all()->toArray(), $doctor->toArray());
+
+        $this->appointment
+            ->deleteAll($doctor->id)
+            ->shouldBeCalled()
+            ->willReturn(true);
+
         $deleted = $this->service->delete($doctor->id);
 
         $this->assertTrue($deleted);
-
-        $this->assertEquals(0, Appointment::where('doctor_id', $doctor->id)->count());
 
         $this->assertEmpty(Doctor::find($doctor->id));
     }
