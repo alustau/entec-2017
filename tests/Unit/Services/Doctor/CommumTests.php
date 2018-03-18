@@ -2,26 +2,12 @@
 namespace Tests\Unit\Services\Doctor;
 
 
-use App\Contracts\Doctor\Creatable;
 use App\Contracts\Doctor\Deletable;
-use App\Contracts\Doctor\Listable;
 use App\Contracts\Doctor\Updatable;
-use App\Models\Doctor;
-use App\Services\Doctor\Eloquent\ListService;
-use App\Services\Doctor\Eloquent\Service;
 
 trait CommumTests
 {
     protected $doctor;
-
-    /**
-     * @test
-     * @return void
-     */
-    public function it_is_instance_of_creatable()
-    {
-        $this->assertInstanceOf(Creatable::class, $this->service);
-    }
 
     /**
      * @test
@@ -39,5 +25,16 @@ trait CommumTests
     public function it_is_instance_of_deletable()
     {
         $this->assertInstanceOf(Deletable::class, $this->service);
+    }
+
+    /**
+     * @param $doctor
+     */
+    protected function hasDoctorAttribute($doctor)
+    {
+        $this->assertObjectHasAttribute('id', $doctor);
+        $this->assertObjectHasAttribute('name', $doctor);
+        $this->assertObjectHasAttribute('specialty', $doctor);
+        $this->assertObjectHasAttribute('registry', $doctor);
     }
 }

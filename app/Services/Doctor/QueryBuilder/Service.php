@@ -8,30 +8,9 @@ use App\Contracts\Doctor\Updatable;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
-class Service implements Creatable, Updatable, Deletable
+class Service implements Updatable, Deletable
 {
     protected $table = 'doctor';
-
-    /**
-     * Create a doctor
-     * @param array $data
-     * @return mixed
-     */
-    public function create(array $data)
-    {
-        unset($data['_token']);
-
-        $timestamps = [
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now()
-        ];
-
-        DB::table($this->table)->insert(array_merge($data, $timestamps));
-
-        $result = DB::select('SELECT * FROM doctor ORDER BY id DESC LIMIT 1');
-
-        return array_first($result);
-    }
 
     /**
      * Update a doctor

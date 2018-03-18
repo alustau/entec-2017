@@ -13,6 +13,6 @@ class CreatorService extends ServiceAbstract implements Creatable
      */
     public function create(array $data)
     {
-        return $this->doctor->create($data);
+        return (object) $this->doctor->create($data)->toArray();
     }
 }
