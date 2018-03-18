@@ -38,46 +38,6 @@ class CreatorServiceTest extends TestCase
         $this->list = $this->prophesize(Listable::class);
     }
 
-
-    /**
-     * @test
-     * @return void
-     */
-    public function it_is_instance_of_listable()
-    {
-        $this->assertInstanceOf(Listable::class, new ListService($this->query));
-    }
-
-    /**
-     * @test
-     * @return void
-     */
-    public function list_all_doctors()
-    {
-        $this->createDoctor();
-
-        $doctors = (new ListService($this->query))->all();
-
-        $this->assertCount(3, $doctors);
-
-        $this->assertInstanceOf(Collection::class, $doctors);
-    }
-
-    /**
-     * @test
-     * @return void
-     */
-    public function list_last_doctors()
-    {
-        $this->createDoctor();
-
-        $doctors = (new ListService($this->query))->all();
-
-        $this->assertCount(3, $doctors);
-
-        $this->assertInstanceOf(Collection::class, $doctors);
-    }
-
     /**
      * @test
      * @return void
@@ -110,39 +70,5 @@ class CreatorServiceTest extends TestCase
         $this->assertEquals(1, Doctor::count());
 
         $this->assertTrue(is_array($doctor));
-    }
-
-    /**
-     * @test
-     * @return void
-     */
-    public function it_updates_a_doctor()
-    {
-        $doctor = $this->createDoctor(1)->first();
-
-        $updated = $this->service->update($doctor->id, [
-            'name' => 'Denis Alustau'
-        ]);
-
-        $this->assertTrue($updated);
-
-        $this->assertEquals('Denis Alustau', Doctor::find($doctor->id)->name);
-    }
-
-    /**
-     * @test
-     * @return void
-     */
-    public function it_deletes_a_doctor()
-    {
-        $doctor = factory(Appointment::class)->create()->doctor;
-
-        $deleted = $this->service->delete($doctor->id);
-
-        $this->assertTrue($deleted);
-
-        $this->assertEquals(0, Appointment::where('doctor_id', $doctor->id)->count());
-
-        $this->assertEmpty(Doctor::find($doctor->id));
     }
 }
