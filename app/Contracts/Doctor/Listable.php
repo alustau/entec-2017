@@ -13,4 +13,10 @@ interface Listable
      * @return mixed
      */
     public function all();
+
+    /**
+     * List the last doctor inserted
+     * @return mixed
+     */
+    public function last(): array;
 }

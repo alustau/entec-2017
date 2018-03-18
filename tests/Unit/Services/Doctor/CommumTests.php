@@ -26,15 +26,4 @@ trait CommumTests
     {
         $this->assertInstanceOf(Deletable::class, $this->service);
     }
-
-    /**
-     * @param $doctor
-     */
-    protected function hasDoctorAttribute($doctor)
-    {
-        $this->assertObjectHasAttribute('id', $doctor);
-        $this->assertObjectHasAttribute('name', $doctor);
-        $this->assertObjectHasAttribute('specialty', $doctor);
-        $this->assertObjectHasAttribute('registry', $doctor);
-    }
 }

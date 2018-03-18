@@ -15,4 +15,19 @@ class ListService extends ServiceAbstract implements Listable
             ->from($this->table)
             ->get();
     }
+
+    /**
+     * List the last doctor inserted
+     * @return mixed
+     */
+    public function last(): array
+    {
+        $result = $this->query
+            ->from($this->table)
+            ->orderBy('id', 'desc')
+            ->limit(1)
+            ->get();
+
+        return (array) $result->first();
+    }
 }

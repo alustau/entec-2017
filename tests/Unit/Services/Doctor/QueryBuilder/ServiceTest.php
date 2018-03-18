@@ -13,16 +13,19 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Tests\Unit\Services\Doctor\CommumAsserts;
 use Tests\Unit\Services\Doctor\CommumTests;
 use Tests\Unit\Services\Helper;
 
 class ServiceTest extends TestCase
 {
-    use DatabaseTransactions, Helper, CommumTests;
+    use DatabaseTransactions, Helper, CommumTests, CommumAsserts;
 
     protected $service;
 
     protected $query;
+
+    protected $list;
 
     public function setUp()
     {
@@ -31,6 +34,8 @@ class ServiceTest extends TestCase
         $this->service = new Service;
 
         $this->query = DB::getFacadeRoot()->query();
+
+        $this->list = $this->prophesize(Listable::class);
     }
 
 
@@ -62,9 +67,24 @@ class ServiceTest extends TestCase
      * @test
      * @return void
      */
+    public function list_last_doctors()
+    {
+        $this->createDoctor();
+
+        $doctors = (new ListService($this->query))->all();
+
+        $this->assertCount(3, $doctors);
+
+        $this->assertInstanceOf(Collection::class, $doctors);
+    }
+
+    /**
+     * @test
+     * @return void
+     */
     public function it_is_instance_of_creatable()
     {
-        $this->assertInstanceOf(Creatable::class, new CreatorService($this->query));
+        $this->assertInstanceOf(Creatable::class, new CreatorService($this->query, $this->list->reveal()));
     }
 
     /**
@@ -77,7 +97,11 @@ class ServiceTest extends TestCase
             ->make()
             ->toArray();
 
-        $doctor = (new CreatorService($this->query))->create($data);
+        $this->list->last()
+            ->shouldBeCalled()
+            ->willReturn(array_merge($data, ['id' => 1]));
+
+        $doctor = (new CreatorService($this->query, $this->list->reveal()))->create($data);
 
         $this->assertNotEmpty($doctor);
 
@@ -85,7 +109,7 @@ class ServiceTest extends TestCase
 
         $this->assertEquals(1, Doctor::count());
 
-        $this->assertInstanceOf(\stdClass::class, $doctor);
+        $this->assertTrue(is_array($doctor));
     }
 
     /**

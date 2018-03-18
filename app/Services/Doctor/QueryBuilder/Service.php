@@ -1,9 +1,7 @@
 <?php
 namespace App\Services\Doctor\QueryBuilder;
 
-use App\Contracts\Doctor\Creatable;
 use App\Contracts\Doctor\Deletable;
-use App\Contracts\Doctor\Listable;
 use App\Contracts\Doctor\Updatable;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;

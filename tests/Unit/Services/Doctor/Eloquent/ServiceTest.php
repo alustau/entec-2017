@@ -11,12 +11,13 @@ use App\Services\Doctor\Eloquent\Service;
 use Illuminate\Support\Collection;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Tests\Unit\Services\Doctor\CommumAsserts;
 use Tests\Unit\Services\Doctor\CommumTests;
 use Tests\Unit\Services\Helper;
 
 class ServiceTest extends TestCase
 {
-    use DatabaseTransactions, Helper, CommumTests;
+    use DatabaseTransactions, Helper, CommumTests, CommumAsserts;
 
     protected $service;
 
@@ -28,32 +29,6 @@ class ServiceTest extends TestCase
         $this->doctor = new Doctor();
 
         $this->service = new Service($this->doctor);
-    }
-
-    /**
-     * @test
-     * @return void
-     */
-    public function it_is_instance_of_listable()
-    {
-        $this->assertInstanceOf(Listable::class, new ListService($this->doctor));
-    }
-
-    /**
-     * @test
-     * @return void
-     */
-    public function it_list_all_doctors()
-    {
-        $this->createDoctor();
-
-        $list = new ListService($this->doctor);
-
-        $doctors = $list->all();
-
-        $this->assertCount(3, $doctors);
-
-        $this->assertInstanceOf(Collection::class, $doctors);
     }
 
     /**
@@ -81,7 +56,7 @@ class ServiceTest extends TestCase
 
         $this->hasDoctorAttribute($doctor);
 
-        $this->assertInstanceOf(\stdClass::class, $doctor);
+        $this->assertTrue(is_array($doctor));
     }
 
     /**

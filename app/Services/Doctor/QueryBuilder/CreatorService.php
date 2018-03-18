@@ -3,10 +3,21 @@ namespace App\Services\Doctor\QueryBuilder;
 
 
 use App\Contracts\Doctor\Creatable;
+use App\Contracts\Doctor\Listable;
 use Carbon\Carbon;
+use Illuminate\Database\Query\Builder as QueryBuilder;
 
 class CreatorService extends ServiceAbstract implements Creatable
 {
+    protected $lister;
+
+    public function __construct(QueryBuilder $query, Listable $lister)
+    {
+        parent::__construct($query);
+
+        $this->lister = $lister;
+    }
+
     /**
      * Create a doctor
      * @param array $data
@@ -25,12 +36,6 @@ class CreatorService extends ServiceAbstract implements Creatable
             ->from($this->table)
             ->insert($data);
 
-        $result = $this->query
-            ->from($this->table)
-            ->orderBy('id', 'desc')
-            ->limit(1)
-            ->get();
-
-        return array_first($result);
+        return $this->lister->last();
     }
 }

@@ -17,11 +17,12 @@ use App\Services\Doctor\QueryBuilder\ListService as DoctorQueryBuilderListServic
 use App\Services\Doctor\QueryBuilder\CreatorService as DoctorQueryBuilderCreatorService;
 use App\Services\Doctor\Eloquent\Service as DoctorEloquentService;
 use App\Services\Doctor\QueryBuilder\Service as DoctorQueryBuilderService;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
-    protected $type = 'Eloquent';
+    protected $type = 'Query Builder';
 
     /**
      * Register any application services.
@@ -52,8 +53,18 @@ class AppServiceProvider extends ServiceProvider
 
     protected function registerDoctorQueryBuilder()
     {
-        $this->app->bind(DoctorListable::class, DoctorQueryBuilderListService::class);
-        $this->app->bind(DoctorCreatable::class, DoctorQueryBuilderCreatorService::class);
+        $query = DB::getFacadeRoot()->query();
+
+        $lister = new DoctorQueryBuilderListService($query);
+
+        $this->app->bind(DoctorListable::class, function () use ($lister) {
+            return $lister;
+        });
+
+        $this->app->bind(DoctorCreatable::class, function () use ($query, $lister) {
+            return new DoctorQueryBuilderCreatorService($query, $lister);
+        });
+
         $this->app->bind(DoctorUpdatable::class, DoctorQueryBuilderService::class);
         $this->app->bind(DoctorDeletable::class, DoctorQueryBuilderService::class);
     }
