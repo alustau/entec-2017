@@ -16,7 +16,7 @@ use App\Services\Doctor\Eloquent\ListService as DoctorEloquentListService;
 use App\Services\Doctor\Eloquent\UpdaterService as DoctorEloquentUpdaterService;
 use App\Services\Doctor\QueryBuilder\ListService as DoctorQueryBuilderListService;
 use App\Services\Doctor\QueryBuilder\CreatorService as DoctorQueryBuilderCreatorService;
-use App\Services\Doctor\Eloquent\Service as DoctorEloquentService;
+use App\Services\Doctor\Eloquent\DeleterService as DoctorEloquentService;
 use App\Services\Doctor\QueryBuilder\Service as DoctorQueryBuilderService;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\ServiceProvider;

@@ -3,10 +3,10 @@ namespace App\Services\Doctor\Eloquent;
 
 
 use App\Contracts\Doctor\Updatable;
-use App\Models\Doctor;
 
 class UpdaterService extends ServiceAbstract implements Updatable
 {
+
     /**
      * Update a doctor
      * @param $doctor
@@ -15,9 +15,7 @@ class UpdaterService extends ServiceAbstract implements Updatable
      */
     public function update($doctor, $data): bool
     {
-        if (! $doctor instanceof Doctor) {
-            $doctor = $this->doctor->find($doctor);
-        }
+        $doctor = $this->find($doctor);
 
         return $doctor->update($data);
     }

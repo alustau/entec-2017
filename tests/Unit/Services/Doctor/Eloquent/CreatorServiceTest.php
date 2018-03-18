@@ -7,7 +7,7 @@ use App\Models\Appointment;
 use App\Models\Doctor;
 use App\Services\Doctor\Eloquent\ListService;
 use App\Services\Doctor\Eloquent\CreatorService;
-use App\Services\Doctor\Eloquent\Service;
+use App\Services\Doctor\Eloquent\DeleterService;
 use Illuminate\Support\Collection;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseTransactions;

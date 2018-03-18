@@ -6,6 +6,7 @@ use App\Contracts\Doctor\Creatable;
 
 class CreatorService extends ServiceAbstract implements Creatable
 {
+
     /**
      * Create a doctor
      * @param array $data

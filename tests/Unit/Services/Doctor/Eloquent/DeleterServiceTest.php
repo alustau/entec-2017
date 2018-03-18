@@ -1,23 +1,17 @@
 <?php
 namespace Tests\Unit\Services\Doctor\Eloquent;
 
-use App\Contracts\Doctor\Creatable;
-use App\Contracts\Doctor\Listable;
+use App\Contracts\Doctor\Deletable;
 use App\Models\Appointment;
 use App\Models\Doctor;
-use App\Services\Doctor\Eloquent\ListService;
-use App\Services\Doctor\Eloquent\CreatorService;
-use App\Services\Doctor\Eloquent\Service;
-use Illuminate\Support\Collection;
+use App\Services\Doctor\Eloquent\DeleterService;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Tests\Unit\Services\Doctor\CommumAsserts;
-use Tests\Unit\Services\Doctor\CommumTests;
 use Tests\Unit\Services\Helper;
 
-class ServiceTest extends TestCase
+class DeleterServiceTest extends TestCase
 {
-    use DatabaseTransactions, Helper, CommumTests, CommumAsserts;
+    use DatabaseTransactions, Helper;
 
     protected $service;
 
@@ -26,9 +20,18 @@ class ServiceTest extends TestCase
     {
         parent::setUp();
 
-        $this->doctor = new Doctor();
+        $this->doctor = new Doctor;
 
-        $this->service = new Service($this->doctor);
+        $this->service = new DeleterService($this->doctor);
+    }
+
+    /**
+     * @test
+     * @return void
+     */
+    public function it_is_instance_of_deletable()
+    {
+        $this->assertInstanceOf(Deletable::class, $this->service);
     }
 
     /**

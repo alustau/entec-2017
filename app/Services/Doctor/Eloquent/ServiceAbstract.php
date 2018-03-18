@@ -10,6 +10,7 @@ use App\Models\Doctor;
  */
 abstract class ServiceAbstract
 {
+
     /**
      * @var Doctor
      */
@@ -22,5 +23,18 @@ abstract class ServiceAbstract
     public function __construct(Doctor $doctor)
     {
         $this->doctor = $doctor;
+    }
+
+    /**
+     * @param $doctor
+     * @return mixed
+     */
+    protected function find($doctor)
+    {
+        if (!$doctor instanceof Doctor) {
+            $doctor = $this->doctor->find($doctor);
+        }
+
+        return $doctor;
     }
 }

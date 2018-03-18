@@ -8,12 +8,12 @@ trait CommumTests
 {
     protected $doctor;
 
-    /**
-     * @test
-     * @return void
-     */
-    public function it_is_instance_of_deletable()
-    {
-        $this->assertInstanceOf(Deletable::class, $this->service);
-    }
+//    /**
+//     * @test
+//     * @return void
+//     */
+//    public function it_is_instance_of_deletable()
+//    {
+//        $this->assertInstanceOf(Deletable::class, $this->service);
+//    }
 }
