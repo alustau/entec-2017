@@ -8,17 +8,9 @@ use App\Contracts\Doctor\Updatable;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
-class Service implements Listable, Creatable, Updatable, Deletable
+class Service implements Creatable, Updatable, Deletable
 {
     protected $table = 'doctor';
-
-    /**
-     * List all doctors
-     * @return mixed
-     */
-    public function all()
-    {
-    }
 
     /**
      * Create a doctor

@@ -7,7 +7,7 @@ use App\Contracts\Doctor\Listable;
 use App\Contracts\Doctor\Updatable;
 use App\Models\Doctor;
 
-class Service implements Creatable, Updatable, Deletable
+class Service implements Updatable, Deletable
 {
     use Helper;
 
@@ -16,16 +16,6 @@ class Service implements Creatable, Updatable, Deletable
     public function __construct(Doctor $doctor)
     {
         $this->doctor = $doctor;
-    }
-
-    /**
-     * Create a doctor
-     * @param array $data
-     * @return mixed
-     */
-    public function create(array $data)
-    {
-        return $this->doctor->create($data);
     }
 
     /**
