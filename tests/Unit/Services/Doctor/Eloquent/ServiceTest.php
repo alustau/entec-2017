@@ -1,10 +1,12 @@
 <?php
 namespace Tests\Unit\Services\Doctor\Eloquent;
 
+use App\Contracts\Doctor\Creatable;
 use App\Contracts\Doctor\Listable;
 use App\Models\Appointment;
 use App\Models\Doctor;
 use App\Services\Doctor\Eloquent\ListService;
+use App\Services\Doctor\Eloquent\CreatorService;
 use App\Services\Doctor\Eloquent\Service;
 use Illuminate\Support\Collection;
 use Tests\TestCase;
@@ -58,17 +60,29 @@ class ServiceTest extends TestCase
      * @test
      * @return void
      */
+    public function it_is_instance_of_creatable()
+    {
+        $this->assertInstanceOf(Creatable::class, new CreatorService($this->doctor));
+    }
+
+    /**
+     * @test
+     * @return void
+     */
     public function it_creates_a_new_doctor()
     {
         $data = factory(Doctor::class)
             ->make()
             ->toArray();
 
-        $doctor = $this->service->create($data);
+        $doctor = (new CreatorService($this->doctor))->create($data);
 
         $this->assertEquals(1, $this->doctor->count());
 
         $this->assertArrayHasKey('id', $doctor);
+        $this->assertArrayHasKey('name', $doctor);
+        $this->assertArrayHasKey('specialty', $doctor);
+        $this->assertArrayHasKey('registry', $doctor);
 
         $this->assertInstanceOf(Doctor::class, $doctor);
     }
