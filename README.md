@@ -23,7 +23,7 @@ Entec 2017 is a simple project with goal to use TDD  and SOLID principles
 
 **Version 1.0 has no patterns.**
 
-**Version 2.0 - TDD, SOLID principles**
+**Version 2.1 - TDD, SOLID principles**
 
 1- Install this project running this:
 ```shell
@@ -35,7 +35,7 @@ $ cd entec-2017
 ```
 3- Checkout on stable version.
 ```shell
-$ git checkout tags/v2.0 
+$ git checkout tags/v2.1 
 ```
 4- Install the dependencies.
 ```shell
