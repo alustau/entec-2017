@@ -1,0 +1,39 @@
+version: '2'
+
+volumes:
+  app:
+  mysql:
+
+services:
+  database:
+    image: mysql:5.7
+    ports:
+      - 3307:3306
+    environment:
+       - MYSQL_ROOT_PASSWORD=entec2017
+       - MYSQL_PASSWORD=entec2017
+       - MYSQL_DATABASE=entec2018
+    volumes:
+      - mysql:/var/lib/mysql
+#    command: mysql -u root -p -e "CREATE DATABASE entec2017 CHARACTER SET utf8 COLLATE utf8_general_ci"
+
+  proxy:
+    image: nginx:alpine
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./docker/proxy/nginx/conf.d:/etc/nginx/conf.d
+    depends_on:
+      - app
+    links:
+      - app
+
+  app:
+    build: .
+    volumes:
+      - .:/entec-2017
+      - ./docker/php/php-fpm.d:/usr/local/etc/php-fpm.d
+    depends_on:
+      - database
+    links:
+      - database
