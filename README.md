@@ -43,7 +43,17 @@ $ composer install
 ```
 5- Set up your .env through .env.example.
 
-6- Start server using:
+6- Generate a key for .env file.
+```shell
+$ php artisan key:generate
+```
+
+7- Run database migration .
+```shell
+$ php artisan migrate
+```
+
+8- Start server using:
 ```shell
 $ php artisan serve
 ```
